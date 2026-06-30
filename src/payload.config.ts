@@ -25,6 +25,11 @@ import { TeamSection } from './globals/TeamSection'
 import { WhyEventizer } from './globals/WhyEventizer'
 import { BlogSection } from './globals/BlogSection'
 import { ContactInfo } from './globals/ContactInfo'
+import {
+  withHomeRevalidate,
+  withHomeRevalidateCollection,
+  withPostRevalidate,
+} from './hooks/revalidate'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -38,7 +43,15 @@ export default buildConfig({
       titleSuffix: '— Eventizer',
     },
   },
-  collections: [Posts, CaseStudies, TeamMembers, Media, Users, Submissions],
+  collections: [
+    withPostRevalidate(Posts),
+    withHomeRevalidateCollection(CaseStudies),
+    withHomeRevalidateCollection(TeamMembers),
+    Media,
+    Users,
+    Submissions,
+  ],
+  // Every Sections global republishes the homepage on save (instant publishing).
   globals: [
     Hero,
     Trusted,
@@ -52,7 +65,7 @@ export default buildConfig({
     WhyEventizer,
     BlogSection,
     ContactInfo,
-  ],
+  ].map(withHomeRevalidate),
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

@@ -25,3 +25,9 @@ next-env.d.ts
 .vercel
 /.lighthouseci
 *.log
+
+# editor / local settings
+.claude/settings.local.json
+
+# design-system reference folder (not part of the Next app build)
+/Eventizer Design System/
