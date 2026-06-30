@@ -3,7 +3,7 @@ import { fileURLToPath } from 'url'
 
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
+import { s3Storage } from '@payloadcms/storage-s3'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 
@@ -34,7 +34,11 @@ import {
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-const blobToken = process.env.BLOB_READ_WRITE_TOKEN
+// Media is stored in Cloudflare R2 (S3-compatible) in production. Active only when
+// the R2 credentials are present; in dev (no creds) Media falls back to local disk.
+const r2Enabled = Boolean(
+  process.env.R2_BUCKET && process.env.R2_ENDPOINT && process.env.R2_ACCESS_KEY_ID,
+)
 
 export default buildConfig({
   admin: {
@@ -83,16 +87,24 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
-    // Vercel Blob is enabled only when a token is present (production). In dev,
-    // Media falls back to the local ./media directory configured on the collection.
-    ...(blobToken
-      ? [
-          vercelBlobStorage({
-            enabled: true,
-            collections: { media: true },
-            token: blobToken,
-          }),
-        ]
-      : []),
+    // Always register S3 storage so the admin importMap (and client bundle) always
+    // includes its upload component — otherwise enabling it in prod references a
+    // component that's missing from the map and crashes the admin to a blank screen.
+    // Only *active* when R2 credentials are present (production); uploads then go to
+    // Cloudflare R2 and are served back through Payload's /api/media/file route.
+    s3Storage({
+      enabled: r2Enabled,
+      collections: { media: true },
+      bucket: process.env.R2_BUCKET || '',
+      config: {
+        region: 'auto',
+        endpoint: process.env.R2_ENDPOINT || '',
+        forcePathStyle: true,
+        credentials: {
+          accessKeyId: process.env.R2_ACCESS_KEY_ID || '',
+          secretAccessKey: process.env.R2_SECRET_ACCESS_KEY || '',
+        },
+      },
+    }),
   ],
 })

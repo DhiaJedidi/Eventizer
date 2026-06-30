@@ -31,3 +31,9 @@ next-env.d.ts
 
 # design-system reference folder (not part of the Next app build)
 /Eventizer Design System/
+
+.vercel
+.env*
+
+# local recovery scratch (re-upload via admin instead)
+/recovered-media/
