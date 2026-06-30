@@ -3,7 +3,7 @@ import { fileURLToPath } from 'url'
 
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
-import { s3Storage } from '@payloadcms/storage-s3'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { buildConfig } from 'payload'
 import sharp from 'sharp'
 
@@ -34,11 +34,7 @@ import {
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-// Media is stored in Cloudflare R2 (S3-compatible) in production. Active only when
-// the R2 credentials are present; in dev (no creds) Media falls back to local disk.
-const r2Enabled = Boolean(
-  process.env.R2_BUCKET && process.env.R2_ENDPOINT && process.env.R2_ACCESS_KEY_ID,
-)
+const blobToken = process.env.BLOB_READ_WRITE_TOKEN
 
 export default buildConfig({
   admin: {
@@ -87,24 +83,18 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
-    // Always register S3 storage so the admin importMap (and client bundle) always
-    // includes its upload component — otherwise enabling it in prod references a
-    // component that's missing from the map and crashes the admin to a blank screen.
-    // Only *active* when R2 credentials are present (production); uploads then go to
-    // Cloudflare R2 and are served back through Payload's /api/media/file route.
-    s3Storage({
-      enabled: r2Enabled,
+    // Always register the Blob plugin so the admin importMap (and client bundle)
+    // always includes its upload component — otherwise enabling it in prod references
+    // a component that's missing from the map and crashes the admin to a blank screen.
+    // Only *active* when a token is present (production). `clientUploads:false` keeps
+    // uploads server-side; the client handler is then never invoked, and next.config
+    // aliases it to a no-op stub (the real one imports node:http via @vercel/blob and
+    // can't be bundled for the browser).
+    vercelBlobStorage({
+      enabled: Boolean(blobToken),
       collections: { media: true },
-      bucket: process.env.R2_BUCKET || '',
-      config: {
-        region: 'auto',
-        endpoint: process.env.R2_ENDPOINT || '',
-        forcePathStyle: true,
-        credentials: {
-          accessKeyId: process.env.R2_ACCESS_KEY_ID || '',
-          secretAccessKey: process.env.R2_SECRET_ACCESS_KEY || '',
-        },
-      },
+      token: blobToken || '',
+      clientUploads: false,
     }),
   ],
 })

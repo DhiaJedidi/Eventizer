@@ -60,6 +60,20 @@ const nextConfig = {
       },
     ]
   },
+
+  // The Vercel Blob admin client-upload handler imports `@vercel/blob/client`, which
+  // drags Node built-ins (node:http → undici) into the browser bundle and breaks the
+  // build / blanks the admin. We only do server-side uploads, so that handler is dead
+  // code — alias it to a no-op stub with the correct Payload shape. The plugin's
+  // server storage logic (the package main entry) is untouched, so uploads still go
+  // to Vercel Blob.
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      '@payloadcms/storage-vercel-blob/client': path.resolve(dirname, 'src/stubs/vercel-blob-client.ts'),
+    }
+    return config
+  },
 }
 
 export default withPayload(nextConfig)
