@@ -1,0 +1,27 @@
+<!-- @dsCard group="Spacing" viewport="700x210" name="Spacing Scale" subtitle="4px → 64px, 7 steps" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--color-bg-surface); padding: 20px 24px; font-family: var(--primitive-font-family-body); display: flex; flex-direction: column; gap: 10px; }
+  .row { display: flex; align-items: center; gap: 14px; }
+  .bar { background: var(--color-brand-primary); opacity: 0.85; border-radius: 3px; height: 12px; flex-shrink: 0; }
+  .meta { display: flex; gap: 8px; align-items: center; }
+  .name  { font-size: 12px; font-weight: 600; color: var(--color-text-primary); width: 28px; }
+  .px    { font-size: 11px; color: var(--color-text-secondary); font-family: monospace; width: 32px; }
+  .token { font-size: 10px; color: var(--color-text-disabled); font-family: monospace; }
+</style>
+</head>
+<body>
+  <div class="row"><div class="bar" style="width:4px"></div><div class="meta"><div class="name">xs</div><div class="px">4px</div><div class="token">--primitive-spacing-xs</div></div></div>
+  <div class="row"><div class="bar" style="width:8px"></div><div class="meta"><div class="name">sm</div><div class="px">8px</div><div class="token">--primitive-spacing-sm</div></div></div>
+  <div class="row"><div class="bar" style="width:16px"></div><div class="meta"><div class="name">md</div><div class="px">16px</div><div class="token">--primitive-spacing-md</div></div></div>
+  <div class="row"><div class="bar" style="width:24px"></div><div class="meta"><div class="name">lg</div><div class="px">24px</div><div class="token">--primitive-spacing-lg</div></div></div>
+  <div class="row"><div class="bar" style="width:32px"></div><div class="meta"><div class="name">xl</div><div class="px">32px</div><div class="token">--primitive-spacing-xl</div></div></div>
+  <div class="row"><div class="bar" style="width:48px"></div><div class="meta"><div class="name">2xl</div><div class="px">48px</div><div class="token">--primitive-spacing-2xl</div></div></div>
+  <div class="row"><div class="bar" style="width:64px"></div><div class="meta"><div class="name">3xl</div><div class="px">64px</div><div class="token">--primitive-spacing-3xl</div></div></div>
+</body>
+</html>

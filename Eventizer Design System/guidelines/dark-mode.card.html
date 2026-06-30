@@ -1,0 +1,35 @@
+<!-- @dsCard group="Colors" viewport="700x180" name="Dark Mode" subtitle="[data-theme=dark] overrides" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { margin: 0; }
+  .dark { background: var(--color-bg-surface); padding: 16px 20px; display: flex; flex-direction: column; gap: 12px; font-family: var(--primitive-font-family-body); }
+  .row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .chip { display: flex; align-items: center; gap: 8px; padding: 5px 10px; border-radius: 6px; border: 1px solid var(--color-border-default); }
+  .dot  { width: 14px; height: 14px; border-radius: 3px; flex-shrink: 0; }
+  .chip-name  { font-size: 11px; font-weight: 600; color: var(--color-text-primary); }
+  .chip-token { font-size: 9px; color: var(--color-text-secondary); font-family: monospace; }
+  .section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-disabled); }
+</style>
+</head>
+<body>
+  <div class="dark" data-theme="dark">
+    <div class="section-label">Dark mode — data-theme="dark"</div>
+    <div class="row">
+      <div class="chip"><div class="dot" style="background:var(--color-bg-surface)"></div><div><div class="chip-name">Surface</div><div class="chip-token">#0D0D0D</div></div></div>
+      <div class="chip"><div class="dot" style="background:var(--color-bg-subtle)"></div><div><div class="chip-name">Subtle</div><div class="chip-token">#222222</div></div></div>
+      <div class="chip"><div class="dot" style="background:var(--color-bg-muted)"></div><div><div class="chip-name">Muted</div><div class="chip-token">#616161</div></div></div>
+    </div>
+    <div class="row">
+      <div class="chip"><div class="dot" style="background:var(--color-text-primary)"></div><div><div class="chip-name">Text Primary</div><div class="chip-token">#FFFFFF</div></div></div>
+      <div class="chip"><div class="dot" style="background:var(--color-text-secondary)"></div><div><div class="chip-name">Text Secondary</div><div class="chip-token">#E8E8E8</div></div></div>
+      <div class="chip"><div class="dot" style="background:var(--color-brand-primary)"></div><div><div class="chip-name">Primary (same)</div><div class="chip-token">#4563AC</div></div></div>
+      <div class="chip"><div class="dot" style="background:var(--color-brand-secondary)"></div><div><div class="chip-name">Secondary (same)</div><div class="chip-token">#E1AA2B</div></div></div>
+    </div>
+  </div>
+</body>
+</html>

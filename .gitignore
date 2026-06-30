@@ -1,0 +1,27 @@
+# dependencies
+/node_modules
+
+# next
+/.next
+/out
+next-env.d.ts
+
+# production
+/build
+
+# payload
+/media
+*.db
+*.db-shm
+*.db-wal
+
+# env
+.env
+.env*.local
+
+# misc
+.DS_Store
+*.pem
+.vercel
+/.lighthouseci
+*.log

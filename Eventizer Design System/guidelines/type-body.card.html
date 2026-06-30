@@ -1,0 +1,31 @@
+<!-- @dsCard group="Type" viewport="700x200" name="Body Type" subtitle="Large / Default / Small — Poppins" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../styles.css">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--color-bg-surface); padding: 20px 24px; display: flex; flex-direction: column; gap: 14px; }
+  .row { display: flex; gap: 16px; align-items: flex-start; }
+  .label { font-family: var(--primitive-font-family-body); font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-text-disabled); width: 52px; flex-shrink: 0; padding-top: 3px; }
+  .divider { height: 1px; background: var(--color-border-default); }
+</style>
+</head>
+<body>
+  <div class="row">
+    <div class="label">Large</div>
+    <div style="font-family:var(--typography-body-large-font-family);font-weight:var(--typography-body-large-font-weight);font-size:var(--typography-body-large-font-size);line-height:var(--typography-body-large-line-height);color:var(--color-text-primary)">Create seamless event experiences for every attendee and organizer.</div>
+  </div>
+  <div class="divider"></div>
+  <div class="row">
+    <div class="label">Default</div>
+    <div style="font-family:var(--typography-body-default-font-family);font-weight:var(--typography-body-default-font-weight);font-size:var(--typography-body-default-font-size);line-height:var(--typography-body-default-line-height);color:var(--color-text-primary)">Manage registrations, sessions, and exhibitors — all from one dashboard.</div>
+  </div>
+  <div class="divider"></div>
+  <div class="row">
+    <div class="label">Small</div>
+    <div style="font-family:var(--typography-body-small-font-family);font-weight:var(--typography-body-small-font-weight);font-size:var(--typography-body-small-font-size);line-height:var(--typography-body-small-line-height);color:var(--color-text-secondary)">All changes are saved automatically. Last updated 2 minutes ago.</div>
+  </div>
+</body>
+</html>

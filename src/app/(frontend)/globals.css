@@ -1,0 +1,369 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ───────────────────────────────────────────────────────────────────────────
+   "Editorial" v4 tokens — light, warm, restrained (mnbaq-inspired).
+   Channel triplets so Tailwind opacity modifiers work. Fonts come from next/font
+   (Fraunces display + Manrope body) via --font-display / --font-body.
+   ─────────────────────────────────────────────────────────────────────────── */
+:root {
+  /* Surfaces — brand neutrals (tokens.json) */
+  --paper: 250 250 249; /* near-white */
+  --cream: 245 245 245; /* #F5F5F5 neutral.100 — alt section */
+  --line: 232 232 232; /* #E8E8E8 neutral.200 — hairline */
+
+  /* Ink (text) — brand neutrals */
+  --ink: 13 13 13; /* #0D0D0D headings */
+  --ink-2: 34 34 34; /* #222222 neutral.800 body */
+  --mute: 97 97 97; /* #616161 neutral.600 muted */
+
+  /* Brand accents (design.md / tokens.json) */
+  --cobalt: 69 99 172; /* #4563AC brand primary */
+  --gold: 225 170 43; /* #E1AA2B brand secondary */
+
+  /* Dark surfaces (hero, footer) */
+  --noir: 13 13 13; /* #0D0D0D */
+
+  /* Dark dashboard mockup (Command Hub) + semantic */
+  --surface: 17 24 39; /* #111827 */
+  --panel: 31 41 55; /* #1F2937 */
+  --violet: 99 102 241; /* #6366F1 */
+  --success: 40 202 65; /* #28CA41 */
+  --danger: 239 68 68; /* #EF4444 */
+  --whatsapp: 37 211 102; /* #25D366 */
+  --tl-red: 255 95 87;
+  --tl-amber: 255 189 46;
+  --tl-green: 40 202 65;
+
+  /* Motion (web-animation-design skill) */
+  --ease-out-quart: cubic-bezier(0.165, 0.84, 0.44, 1);
+  --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+/* ─── Base ─────────────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: rgb(var(--paper));
+    color: rgb(var(--ink-2));
+    font-family: var(--font-body), system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display), system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    color: rgb(var(--ink));
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  ::selection {
+    background-color: rgb(var(--gold) / 0.22);
+    color: rgb(var(--ink));
+  }
+
+  :focus-visible {
+    outline: 2px solid rgb(var(--gold));
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+/* ─── Components / utilities ─────────────────────────────────────────────────── */
+@layer components {
+  .skip-link {
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translateY(-150%);
+    z-index: 100;
+    margin: 0.5rem;
+    padding: 0.625rem 1rem;
+    border-radius: 4px;
+    background-color: rgb(var(--ink));
+    color: rgb(var(--paper));
+    font-family: var(--font-body);
+    font-weight: 600;
+    transition: transform 150ms ease-out;
+  }
+  .skip-link:focus {
+    transform: translateY(0);
+  }
+
+  /* Eyebrow — small uppercase editorial label */
+  .eyebrow {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  /* Animated underline link (micro-interaction) */
+  .link-underline {
+    position: relative;
+  }
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1px;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: right;
+    background-color: currentColor;
+    transition: transform 320ms var(--ease-out-expo);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .link-underline:hover::after {
+      transform: scaleX(1);
+      transform-origin: left;
+    }
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* ── Liquid glass (hero navbar / cards / pills) ── */
+  .liquid-glass {
+    background: rgba(0, 0, 0, 0.68);
+    background-blend-mode: luminosity;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: none;
+    box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+  }
+  .liquid-glass::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1.4px;
+    background: linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.3) 0%,
+      rgba(255, 255, 255, 0.1) 20%,
+      rgba(255, 255, 255, 0) 40%,
+      rgba(255, 255, 255, 0) 60%,
+      rgba(255, 255, 255, 0.1) 80%,
+      rgba(255, 255, 255, 0.3) 100%
+    );
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  /* ── Trusted / sparkles horizon glow (brand cobalt) ── */
+  .trusted-glow {
+    background: radial-gradient(
+      circle at bottom center,
+      rgb(var(--cobalt) / 0.85) 0%,
+      rgb(var(--cobalt) / 0.4) 18%,
+      rgb(var(--gold) / 0.18) 34%,
+      transparent 62%
+    );
+  }
+
+  /* ── Cinematic footer (brand-adapted, no external fonts/tokens) ── */
+  .footer-aurora {
+    background: radial-gradient(
+      circle at 50% 50%,
+      rgb(var(--cobalt) / 0.22) 0%,
+      rgb(var(--gold) / 0.1) 40%,
+      transparent 70%
+    );
+  }
+  .footer-grid {
+    background-size: 60px 60px;
+    background-image:
+      linear-gradient(to right, rgb(255 255 255 / 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.04) 1px, transparent 1px);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+    mask-image: linear-gradient(to bottom, transparent, black 30%, black 70%, transparent);
+  }
+  .footer-giant {
+    font-family: var(--font-display), system-ui, sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    color: transparent;
+    background: linear-gradient(
+      180deg,
+      rgb(var(--cobalt) / 0.4) 0%,
+      rgb(var(--gold) / 0.12) 52%,
+      transparent 78%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+
+  /* Team initials-avatar gradients (fallback when no real headshot) — brand cobalt/gold */
+  .team-grad-0 { background: linear-gradient(135deg, #4563ac, #0d0d0d); }
+  .team-grad-1 { background: linear-gradient(135deg, #e1aa2b, #0d0d0d); }
+  .team-grad-2 { background: linear-gradient(135deg, #4563ac, #222222); }
+  .team-grad-3 { background: linear-gradient(135deg, #2d3c66, #0d0d0d); }
+  .team-grad-4 { background: linear-gradient(135deg, #e1aa2b, #4563ac); }
+  .team-grad-5 { background: linear-gradient(135deg, #4563ac, #1a2540); }
+
+  /* ── Custom cursor (desktop fine-pointer; gated in JS) ── */
+  .cursor-dot,
+  .cursor-ring {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    pointer-events: none;
+    visibility: hidden;
+    opacity: 0;
+  }
+  .cursor-dot {
+    height: 7px;
+    width: 7px;
+    border-radius: 9999px;
+    background: rgb(var(--gold));
+  }
+  .cursor-ring {
+    height: 34px;
+    width: 34px;
+    border-radius: 9999px;
+    border: 1.5px solid rgb(var(--cobalt) / 0.55);
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+  }
+  .cursor-ring.is-hover {
+    border-color: rgb(var(--gold) / 0.9);
+    background: rgb(var(--gold) / 0.08);
+  }
+  html.has-cursor,
+  html.has-cursor * {
+    cursor: none;
+  }
+  html.has-cursor input,
+  html.has-cursor textarea,
+  html.has-cursor select,
+  html.has-cursor [contenteditable='true'] {
+    cursor: auto;
+  }
+
+  /* ── Scroll-progress bar ── */
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 60;
+    height: 3px;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left center;
+    background: linear-gradient(90deg, rgb(var(--cobalt)), rgb(var(--gold)));
+  }
+
+  /* ── Spotlight cards — cursor-tracking cobalt glow (positions set in Cursor.tsx) ── */
+  .spotlight {
+    position: relative;
+  }
+  .spotlight::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+    pointer-events: none;
+    background: radial-gradient(
+      220px circle at var(--mx, 50%) var(--my, 50%),
+      rgb(var(--cobalt) / 0.1),
+      transparent 65%
+    );
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .spotlight:hover::before {
+    opacity: 1;
+  }
+  /* White glow variant for dark surfaces (cobalt band, footer) */
+  .spotlight-on-dark::before {
+    background: radial-gradient(
+      220px circle at var(--mx, 50%) var(--my, 50%),
+      rgb(255 255 255 / 0.12),
+      transparent 65%
+    );
+  }
+
+  /* ── Animated cobalt→gold gradient border on hover ── */
+  .grad-border {
+    position: relative;
+  }
+  .grad-border::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    border-radius: inherit;
+    padding: 1px;
+    pointer-events: none;
+    background: linear-gradient(140deg, rgb(var(--cobalt) / 0.75), rgb(var(--gold) / 0.75));
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.45s ease;
+  }
+  .grad-border:hover::after {
+    opacity: 1;
+  }
+
+  /* ── Soft brand aurora (decorative section backdrop) ── */
+  .aurora-soft {
+    background:
+      radial-gradient(38% 50% at 12% 18%, rgb(var(--cobalt) / 0.08), transparent 70%),
+      radial-gradient(36% 48% at 88% 12%, rgb(var(--gold) / 0.08), transparent 70%),
+      radial-gradient(52% 60% at 50% 112%, rgb(var(--cobalt) / 0.06), transparent 70%);
+  }
+
+  /* ── Film grain overlay (place inside a relative, dark section) ── */
+  .grain-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.4;
+    mix-blend-mode: overlay;
+    background-size: 180px 180px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/* ───────────────────────────────────────────────────────────────────────────
+   Reduced motion — `!important` permitted ONLY here (ai-usage.md §10, WCAG 2.3.3).
+   GSAP reveals are skipped in JS; content is never pre-hidden in CSS.
+   ─────────────────────────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

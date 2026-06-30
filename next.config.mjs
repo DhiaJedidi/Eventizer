@@ -1,0 +1,65 @@
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+import { withPayload } from '@payloadcms/next/withPayload'
+
+const dirname = path.dirname(fileURLToPath(import.meta.url))
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  // NOTE: `output: 'export'` is intentionally NOT set — Payload's admin panel and API
+  // require a server runtime. Deploy as Vercel serverless (default output).
+  reactStrictMode: true,
+  compress: true,
+
+  // Pin the file-tracing root to this project (avoids selecting a stray lockfile
+  // in a parent directory).
+  outputFileTracingRoot: dirname,
+
+  images: {
+    formats: ['image/webp'],
+    deviceSizes: [375, 640, 768, 1024, 1280, 1536],
+    imageSizes: [120, 160, 400, 600, 800],
+    minimumCacheTTL: 31536000,
+    dangerouslyAllowSVG: false,
+    // Payload Media served from Vercel Blob in production (local dev serves same-origin).
+    remotePatterns: [
+      { protocol: 'https', hostname: '**.public.blob.vercel-storage.com' },
+    ],
+  },
+
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+          { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+        ],
+      },
+      {
+        source: '/fonts/:path*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
+      {
+        source: '/_next/static/:path*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
+    ]
+  },
+
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'eventizer.tn' }],
+        destination: 'https://www.eventizer.tn/:path*',
+        permanent: true,
+      },
+    ]
+  },
+}
+
+export default withPayload(nextConfig)

@@ -1,0 +1,75 @@
+/* ============================================================
+   Eventizer — Specimen Chrome
+   Shared documentation language for every foundation card.
+   Editorial / spec-sheet system: sharp corners, hairline rules,
+   layered elevation, refined monospace specs, gold-tick accent.
+   Brand colors + fonts are never altered here.
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* ink */
+  --ink:    var(--color-text-primary);
+  --mute:   var(--color-text-secondary);
+  --faint:  var(--color-text-disabled);
+  --paper:  var(--color-bg-surface);
+  --desk:   var(--color-bg-subtle);
+
+  /* hairlines — the structural backbone of the language */
+  --hair:      rgba(13, 13, 13, 0.12);
+  --hair-soft: rgba(13, 13, 13, 0.07);
+
+  /* elevation — intentional, layered, never a single flat blur */
+  --e-1: 0 1px 1px rgba(13,13,13,.04), 0 1px 2px rgba(13,13,13,.05);
+  --e-2: 0 1px 2px rgba(13,13,13,.05), 0 8px 18px -10px rgba(13,13,13,.20);
+  --e-3: 0 2px 4px rgba(13,13,13,.06), 0 22px 44px -18px rgba(13,13,13,.32);
+
+  /* spec annotation font — system mono, deliberate (not Courier) */
+  --mono: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}
+
+html, body { height: 100%; }
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--primitive-font-family-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ── Eyebrow: the recurring categorical micro-label ─────────── */
+.eyebrow {
+  font-family: var(--primitive-font-family-body);
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--faint);
+  line-height: 1;
+}
+
+/* ── Spec: monospace annotation (token names, values) ───────── */
+.spec {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.01em;
+  color: var(--mute);
+  font-feature-settings: "tnum" 1, "zero" 1;
+  line-height: 1.3;
+}
+.spec--faint { color: var(--faint); font-size: 10px; }
+.spec--ink   { color: var(--ink); }
+
+/* ── Gold tick: the signature accent, echoes the wordmark ───── */
+.tick {
+  width: 22px;
+  height: 2px;
+  background: var(--color-brand-secondary);
+  display: block;
+}
+
+/* ── Hairline rule ──────────────────────────────────────────── */
+.rule { height: 1px; background: var(--hair-soft); border: 0; width: 100%; }
+.rule--v { width: 1px; height: 100%; background: var(--hair-soft); }
