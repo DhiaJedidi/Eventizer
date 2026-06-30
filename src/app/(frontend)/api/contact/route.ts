@@ -28,17 +28,15 @@ export async function POST(req: Request) {
 
   const data = parsed.data
 
+  // 1. Store the lead (Local API, overrideAccess — public create is closed).
+  //    This is the critical step: if it fails, the request fails.
   try {
-    // 1. Store the lead (Local API, overrideAccess — public create is closed).
     const payload = await getPayloadClient()
     await payload.create({
       collection: 'submissions',
       data: { ...data, status: 'new' },
       overrideAccess: true,
     })
-
-    // 2. Notify the team.
-    await sendContactEmail(data)
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('[contact] submission failed:', err)
@@ -46,6 +44,16 @@ export async function POST(req: Request) {
       { ok: false, error: 'server' },
       { status: 502, headers: { 'Cache-Control': 'no-store' } },
     )
+  }
+
+  // 2. Notify the team — best-effort. The lead is already saved (visible in
+  //    /admin → Demande), so a missing/broken email config must never surface an
+  //    error to the visitor or lose the lead.
+  try {
+    await sendContactEmail(data)
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error('[contact] email notification failed (lead saved):', err)
   }
 
   return NextResponse.json(
