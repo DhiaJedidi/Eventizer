@@ -83,18 +83,14 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
-    // Vercel Blob — active when a token is present (production). `clientUploads:false`
-    // keeps uploads server-side so the browser bundle never pulls in the Blob client
-    // SDK (which drags Node-only modules in and breaks the build). The
-    // "PayloadComponent not found" admin log for the (disabled) client handler is a
-    // harmless warning — uploads still work and go straight to Blob.
+    // Vercel Blob is enabled only when a token is present (production). In dev,
+    // Media falls back to the local ./media directory configured on the collection.
     ...(blobToken
       ? [
           vercelBlobStorage({
             enabled: true,
             collections: { media: true },
             token: blobToken,
-            clientUploads: false,
           }),
         ]
       : []),
