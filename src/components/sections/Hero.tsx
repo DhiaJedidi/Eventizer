@@ -130,8 +130,8 @@ export function Hero({ data }: { data: HeroView }) {
             </div>
           </div>
 
-          {/* Right — tagline tag card */}
-          <div className="mt-10 flex items-end justify-start lg:mt-0 lg:justify-end">
+          {/* Right — tagline tag card (desktop only; hidden on mobile/tablet) */}
+          <div className="mt-10 hidden items-end justify-start lg:mt-0 lg:flex lg:justify-end">
             <div className="hero-tag liquid-glass rounded-xl px-6 py-3">
               <span className="text-lg font-light tracking-wideish md:text-xl lg:text-2xl">{SITE.tagline}</span>
             </div>
