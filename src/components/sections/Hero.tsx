@@ -63,7 +63,7 @@ export function Hero({ data }: { data: HeroView }) {
 
   return (
     <section id="hero" ref={root} className="relative h-[100svh] w-full overflow-hidden bg-noir text-white">
-      {/* Raw full-screen video — no overlay, no dimming */}
+      {/* Full-screen video */}
       <video
         ref={videoRef}
         className="absolute inset-0 h-full w-full object-cover"
@@ -77,7 +77,10 @@ export function Hero({ data }: { data: HeroView }) {
         <source src={VIDEO} type="video/mp4" />
       </video>
 
-      {/* Subtle bottom scrim — keeps text legible across the 3 varied clips */}
+      {/* Dark overlay — dims the whole reel for a moodier look + stronger text contrast */}
+      <div aria-hidden="true" className="absolute inset-0 z-[4] bg-noir/45" />
+
+      {/* Bottom scrim — extra darkness at the base so the copy stays legible */}
       <div
         aria-hidden="true"
         className="absolute inset-x-0 bottom-0 z-[5] h-2/3 bg-gradient-to-t from-noir/80 via-noir/30 to-transparent"
