@@ -4,32 +4,36 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
-import { NAV } from '@/lib/content'
+import { getContent } from '@/lib/content-i18n'
+import type { Locale } from '@/lib/i18n'
 import { track } from '@/lib/analytics'
 import { Magnetic } from '@/components/ui/Magnetic'
+import { LanguageSwitcher } from '@/components/ui/LanguageSwitcher'
 
-const SECTION_IDS = NAV.links.map((l) => l.href.replace('#', ''))
-
-export function Navbar() {
+export function Navbar({ locale }: { locale: Locale }) {
+  const { NAV } = getContent(locale)
   const [open, setOpen] = useState(false)
   const [active, setActive] = useState('')
   const drawerRef = useRef<HTMLDivElement>(null)
 
-  // On the home page, section links are in-page anchors; on sub-pages (e.g. /blog)
-  // they must navigate home first.
-  const isHome = usePathname() === '/'
-  const hrefFor = (hash: string) => (isHome ? hash : `/${hash}`)
+  // On the home page (/{locale}), section links are in-page anchors; on sub-pages
+  // (e.g. /{locale}/blog) they must navigate home first.
+  const isHome = usePathname() === `/${locale}`
+  const hrefFor = (hash: string) => (isHome ? hash : `/${locale}${hash}`)
 
   useEffect(() => {
+    // Section ids are locale-independent (#services, #contact, …).
+    const ids = NAV.links.map((l) => l.href.replace('#', ''))
     const observer = new IntersectionObserver(
       (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
       { rootMargin: '-45% 0px -50% 0px' },
     )
-    SECTION_IDS.forEach((id) => {
+    ids.forEach((id) => {
       const el = document.getElementById(id)
       if (el) observer.observe(el)
     })
     return () => observer.disconnect()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const close = useCallback(() => setOpen(false), [])
@@ -55,7 +59,7 @@ export function Navbar() {
         </a>
 
         {/* Center links */}
-        <nav aria-label="Navigation principale" className="hidden items-center gap-5 lg:gap-7 md:flex">
+        <nav aria-label={NAV.logoAria} className="hidden items-center gap-5 lg:gap-7 md:flex">
           {NAV.links.map((l) => {
             const id = l.href.replace('#', '')
             const isActive = active === id
@@ -73,8 +77,9 @@ export function Navbar() {
           })}
         </nav>
 
-        {/* CTA + hamburger */}
-        <div className="flex items-center gap-2">
+        {/* Switcher + CTA + hamburger */}
+        <div className="flex items-center gap-3">
+          <LanguageSwitcher locale={locale} className="hidden md:flex" />
           <Magnetic className="hidden md:inline-block">
             <a
               href={hrefFor('#contact')}
@@ -105,7 +110,7 @@ export function Navbar() {
           ref={drawerRef}
           role="dialog"
           aria-modal="true"
-          aria-label="Menu de navigation"
+          aria-label={NAV.logoAria}
           className="mt-3 rounded-xl bg-noir p-2 md:hidden"
         >
           <nav className="flex flex-col">
@@ -129,6 +134,9 @@ export function Navbar() {
             >
               {NAV.cta}
             </a>
+            <div className="mt-3 flex justify-center pb-1">
+              <LanguageSwitcher locale={locale} />
+            </div>
           </nav>
         </div>
       ) : null}

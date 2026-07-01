@@ -39,7 +39,7 @@ export const Media: CollectionConfig = {
   },
   fields: [
     {
-      name: 'alt',
+      name: 'alt', localized: true,
       type: 'text',
       required: true,
       label: 'Texte alternatif (alt)',

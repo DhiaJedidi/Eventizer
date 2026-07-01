@@ -25,8 +25,8 @@ export const TeamMembers: CollectionConfig = {
       label: 'Ordre d’affichage',
     },
     { name: 'name', type: 'text', required: true, label: 'Nom complet' },
-    { name: 'role', type: 'text', required: true, label: 'Rôle' },
-    { name: 'oneLiner', type: 'textarea', required: true, label: 'Phrase de présentation' },
+    { name: 'role', localized: true, type: 'text', required: true, label: 'Rôle' },
+    { name: 'oneLiner', localized: true, type: 'textarea', required: true, label: 'Phrase de présentation' },
     {
       name: 'headshot',
       type: 'upload',

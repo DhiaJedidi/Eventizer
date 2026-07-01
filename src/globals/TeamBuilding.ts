@@ -7,11 +7,11 @@ export const TeamBuilding: GlobalConfig = {
   access: { read: () => true },
   admin: { group: 'Sections' },
   fields: [
-    { name: 'eyebrow', type: 'text', label: 'Eyebrow (sur-titre)' },
-    { name: 'h2', type: 'text', required: true, label: 'Titre H2' },
-    { name: 'intro', type: 'textarea', required: true, label: 'Introduction' },
+    { name: 'eyebrow', localized: true, type: 'text', label: 'Eyebrow (sur-titre)' },
+    { name: 'h2', localized: true, type: 'text', required: true, label: 'Titre H2' },
+    { name: 'intro', localized: true, type: 'textarea', required: true, label: 'Introduction' },
     {
-      name: 'items',
+      name: 'items', localized: true,
       type: 'array',
       label: 'Expériences',
       minRows: 1,

@@ -4,7 +4,8 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
-import { FOOTER, NAV } from '@/lib/content'
+import { getContent } from '@/lib/content-i18n'
+import type { Locale } from '@/lib/i18n'
 import { gsap } from '@/lib/gsap'
 import { track } from '@/lib/analytics'
 import { Container } from '@/components/ui/Container'
@@ -12,13 +13,14 @@ import { Magnetic } from '@/components/ui/Magnetic'
 
 const useIso = typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
-export function Footer() {
+export function Footer({ locale }: { locale: Locale }) {
+  const { FOOTER, NAV } = getContent(locale)
   const wrapperRef = useRef<HTMLDivElement>(null)
   const giantRef = useRef<HTMLDivElement>(null)
   const contentRef = useRef<HTMLDivElement>(null)
   const [curtain, setCurtain] = useState(false)
-  const isHome = usePathname() === '/'
-  const hrefFor = (hash: string) => (isHome ? hash : `/${hash}`)
+  const isHome = usePathname() === `/${locale}`
+  const hrefFor = (hash: string) => (isHome ? hash : `/${locale}${hash}`)
 
   // Curtain reveal only on capable desktops; static cinematic footer otherwise.
   useIso(() => {
@@ -118,7 +120,7 @@ export function Footer() {
       <div className="relative z-10">
         <Container className="flex flex-col items-center justify-between gap-4 border-t border-white/8 py-6 sm:flex-row">
           <p className="text-[11px] uppercase tracking-widest2 text-white/40">{FOOTER.copyright}</p>
-          <a href="/mentions-legales" className="link-underline text-[11px] uppercase tracking-widest2 text-white/40 transition-colors hover:text-white/70">
+          <a href={`/${locale}/mentions-legales`} className="link-underline text-[11px] uppercase tracking-widest2 text-white/40 transition-colors hover:text-white/70">
             {FOOTER.legalLink}
           </a>
           <Magnetic>

@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic'
 
+import { DEFAULT_LOCALE, isLocale } from '@/lib/i18n'
 import {
   getBlogSection,
   getCaseStudies,
@@ -46,7 +47,10 @@ const Contact = dynamic(() => import('@/components/sections/Contact').then((m) =
 // Statically generated, periodically revalidated (fresh for SEO, CDN-cached for speed).
 export const revalidate = 3600
 
-export default async function HomePage() {
+export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale: raw } = await params
+  const locale = isLocale(raw) ? raw : DEFAULT_LOCALE
+
   const [
     hero,
     stats,
@@ -63,30 +67,30 @@ export default async function HomePage() {
     teamSection,
     blogSection,
   ] = await Promise.all([
-    getHero(),
-    getStats(),
-    getPlatform(),
-    getWhy(),
-    getCaseStudies(),
-    getTeam(),
-    getContactInfo(),
-    getTrusted(),
-    getTestimonials(),
-    getTeamBuilding(),
-    getPillars(),
-    getReferencesSection(),
-    getTeamSection(),
-    getBlogSection(),
+    getHero(locale),
+    getStats(locale),
+    getPlatform(locale),
+    getWhy(locale),
+    getCaseStudies(locale),
+    getTeam(locale),
+    getContactInfo(locale),
+    getTrusted(locale),
+    getTestimonials(locale),
+    getTeamBuilding(locale),
+    getPillars(locale),
+    getReferencesSection(locale),
+    getTeamSection(locale),
+    getBlogSection(locale),
   ])
 
   return (
     <>
-      <Navbar />
+      <Navbar locale={locale} />
       <ScrollRefresh />
       <main id="main-content">
-        <Hero data={hero} />
+        <Hero data={hero} locale={locale} />
         <Trusted data={trusted} />
-        <Pillars header={pillars} />
+        <Pillars header={pillars} locale={locale} />
         <TeamBuilding data={teamBuilding} />
         <Platform data={platform} />
         <Stats data={stats} />
@@ -94,10 +98,10 @@ export default async function HomePage() {
         <Testimonials data={testimonials} />
         <Team data={team} header={teamSection} />
         <WhyEventizer data={why} />
-        <Blog data={blogSection} />
-        <Contact contactInfo={contactInfo} />
+        <Blog data={blogSection} locale={locale} />
+        <Contact contactInfo={contactInfo} locale={locale} />
       </main>
-      <Footer />
+      <Footer locale={locale} />
     </>
   )
 }

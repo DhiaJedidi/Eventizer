@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 
-import { BLOG } from '@/lib/content'
+import { getContent } from '@/lib/content-i18n'
+import { DEFAULT_LOCALE, isLocale } from '@/lib/i18n'
 import { getPosts } from '@/lib/queries'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
@@ -9,22 +10,30 @@ import { BlogFilterGrid } from '@/components/sections/BlogFilterGrid'
 
 export const revalidate = 3600
 
-export const metadata: Metadata = {
-  title: 'Le Blog — Eventizer',
-  description: BLOG.listSubtitle,
-  alternates: { canonical: '/blog' },
-  openGraph: {
-    title: 'Le Blog — Eventizer',
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>
+}): Promise<Metadata> {
+  const { locale: raw } = await params
+  const locale = isLocale(raw) ? raw : DEFAULT_LOCALE
+  const { BLOG } = getContent(locale)
+  return {
+    title: `${BLOG.listHeading} — Eventizer`,
     description: BLOG.listSubtitle,
-    url: '/blog',
-  },
+    alternates: { canonical: `/${locale}/blog` },
+    openGraph: { title: `${BLOG.listHeading} — Eventizer`, description: BLOG.listSubtitle, url: `/${locale}/blog` },
+  }
 }
 
-export default async function BlogIndexPage() {
-  const posts = await getPosts()
+export default async function BlogIndexPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale: raw } = await params
+  const locale = isLocale(raw) ? raw : DEFAULT_LOCALE
+  const { BLOG } = getContent(locale)
+  const posts = await getPosts(locale)
   return (
     <>
-      <Navbar />
+      <Navbar locale={locale} />
       <main id="main-content" className="bg-paper">
         <section className="border-b border-line bg-white pb-16 pt-32 sm:pt-40">
           <Container className="text-center">
@@ -38,11 +47,11 @@ export default async function BlogIndexPage() {
 
         <section className="py-16 sm:py-20">
           <Container>
-            <BlogFilterGrid posts={posts} />
+            <BlogFilterGrid posts={posts} locale={locale} />
           </Container>
         </section>
       </main>
-      <Footer />
+      <Footer locale={locale} />
     </>
   )
 }

@@ -10,8 +10,8 @@ export const ReferencesSection: GlobalConfig = {
   access: { read: () => true },
   admin: { group: 'Sections' },
   fields: [
-    { name: 'eyebrow', type: 'text', label: 'Eyebrow (sur-titre)' },
-    { name: 'title', type: 'text', required: true, label: 'Titre' },
-    { name: 'subtitle', type: 'textarea', label: 'Sous-titre' },
+    { name: 'eyebrow', localized: true, type: 'text', label: 'Eyebrow (sur-titre)' },
+    { name: 'title', localized: true, type: 'text', required: true, label: 'Titre' },
+    { name: 'subtitle', localized: true, type: 'textarea', label: 'Sous-titre' },
   ],
 }

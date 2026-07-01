@@ -4,7 +4,8 @@ import { forwardRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { CONTACT } from '@/lib/content'
+import { getContent } from '@/lib/content-i18n'
+import type { Locale } from '@/lib/i18n'
 import { contactSchema, type ContactInput } from '@/lib/schemas'
 import { track } from '@/lib/analytics'
 import type { ContactInfoView } from '@/types'
@@ -17,7 +18,8 @@ const inputBase =
   'w-full rounded-md border bg-white px-4 py-3.5 text-[15px] text-ink placeholder:text-mute ' +
   'transition-colors duration-200 focus:outline-none focus:ring-4 focus:ring-cobalt/15'
 
-export function Contact({ contactInfo }: { contactInfo: ContactInfoView }) {
+export function Contact({ contactInfo, locale }: { contactInfo: ContactInfoView; locale: Locale }) {
+  const { CONTACT } = getContent(locale)
   const [status, setStatus] = useState<Status>('idle')
   const sectionRef = useGsapReveal<HTMLElement>({ childSelector: '.contact-reveal', y: 28, stagger: 0.16, start: 'top 82%' })
 
@@ -64,7 +66,7 @@ export function Contact({ contactInfo }: { contactInfo: ContactInfoView }) {
           <div className="contact-reveal">
             {status === 'success' ? (
               <div className="spotlight grad-border rounded-2xl border border-line bg-white p-8">
-                <SuccessState contactInfo={contactInfo} />
+                <SuccessState contactInfo={contactInfo} locale={locale} />
               </div>
             ) : (
               <form onSubmit={handleSubmit(onSubmit)} aria-label={CONTACT.formAria} noValidate className="flex flex-col gap-5">
@@ -107,7 +109,7 @@ export function Contact({ contactInfo }: { contactInfo: ContactInfoView }) {
           </div>
 
           <div className="contact-reveal">
-            <ContactDetails contactInfo={contactInfo} />
+            <ContactDetails contactInfo={contactInfo} locale={locale} />
           </div>
         </div>
       </Container>
@@ -199,7 +201,8 @@ const FieldError = ({ id, error }: { id: string; error?: string }) =>
 
 /* ── Success + details ───────────────────────────────────────────────────── */
 
-function SuccessState({ contactInfo }: { contactInfo: ContactInfoView }) {
+function SuccessState({ contactInfo, locale }: { contactInfo: ContactInfoView; locale: Locale }) {
+  const { CONTACT } = getContent(locale)
   return (
     <div role="status" aria-live="polite" className="flex flex-col gap-4">
       <h3 className="font-heading text-2xl font-semibold text-ink">{CONTACT.success.title}</h3>
@@ -228,7 +231,8 @@ function SuccessState({ contactInfo }: { contactInfo: ContactInfoView }) {
   )
 }
 
-function ContactDetails({ contactInfo }: { contactInfo: ContactInfoView }) {
+function ContactDetails({ contactInfo, locale }: { contactInfo: ContactInfoView; locale: Locale }) {
+  const { CONTACT } = getContent(locale)
   return (
     <div className="spotlight grad-border h-full rounded-2xl border border-line bg-white p-8">
       <h3 className="font-heading text-xl font-semibold text-ink">{CONTACT.details.heading}</h3>

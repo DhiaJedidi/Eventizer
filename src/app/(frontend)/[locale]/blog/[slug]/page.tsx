@@ -3,7 +3,8 @@ import { notFound } from 'next/navigation'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { BLOG } from '@/lib/content'
+import { getContent } from '@/lib/content-i18n'
+import { DEFAULT_LOCALE, LOCALES, isLocale } from '@/lib/i18n'
 import { getPosts, getPostBySlug } from '@/lib/queries'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
@@ -11,48 +12,55 @@ import { Container } from '@/components/ui/Container'
 
 export const revalidate = 3600
 
-type Params = { params: Promise<{ slug: string }> }
+type Params = { params: Promise<{ locale: string; slug: string }> }
 
 export async function generateStaticParams() {
-  const posts = await getPosts()
-  return posts.map((p) => ({ slug: p.slug }))
+  const params: { locale: string; slug: string }[] = []
+  for (const locale of LOCALES) {
+    const posts = await getPosts(locale)
+    for (const p of posts) params.push({ locale, slug: p.slug })
+  }
+  return params
 }
 
 export async function generateMetadata({ params }: Params): Promise<Metadata> {
-  const { slug } = await params
-  const post = await getPostBySlug(slug)
+  const { locale: raw, slug } = await params
+  const locale = isLocale(raw) ? raw : DEFAULT_LOCALE
+  const post = await getPostBySlug(slug, locale)
   if (!post) return {}
   return {
-    title: `${post.title} — Le Blog Eventizer`,
+    title: `${post.title} — Eventizer`,
     description: post.excerpt,
-    alternates: { canonical: `/blog/${post.slug}` },
+    alternates: { canonical: `/${locale}/blog/${post.slug}` },
     openGraph: {
       type: 'article',
       title: post.title,
       description: post.excerpt,
-      url: `/blog/${post.slug}`,
+      url: `/${locale}/blog/${post.slug}`,
       images: [{ url: post.image }],
     },
   }
 }
 
 export default async function BlogPostPage({ params }: Params) {
-  const { slug } = await params
-  const post = await getPostBySlug(slug)
+  const { locale: raw, slug } = await params
+  const locale = isLocale(raw) ? raw : DEFAULT_LOCALE
+  const { BLOG } = getContent(locale)
+  const post = await getPostBySlug(slug, locale)
   if (!post) notFound()
 
   return (
     <>
-      <Navbar />
+      <Navbar locale={locale} />
       <main id="main-content" className="bg-paper">
         <article className="pt-32 sm:pt-40">
           {/* Header */}
           <Container className="max-w-prose">
             <Link
-              href="/blog"
+              href={`/${locale}/blog`}
               className="group inline-flex items-center gap-2 text-sm font-semibold text-mute transition-colors hover:text-cobalt"
             >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="transition-transform duration-300 group-hover:-translate-x-1">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true" className="transition-transform duration-300 group-hover:-translate-x-1 rtl:group-hover:translate-x-1 rtl:rotate-180">
                 <path d="M19 12H5M11 6l-6 6 6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
               {BLOG.backToList}
@@ -104,7 +112,7 @@ export default async function BlogPostPage({ params }: Params) {
               <h2 className="font-heading text-2xl font-bold text-ink">{BLOG.ctaTitle}</h2>
               <p className="mx-auto mt-3 max-w-md text-mute">{BLOG.ctaSubtitle}</p>
               <Link
-                href="/#contact"
+                href={`/${locale}#contact`}
                 className="mt-6 inline-flex rounded-full bg-cobalt px-8 py-3.5 font-semibold text-white transition-[filter] duration-300 hover:brightness-110"
               >
                 {BLOG.ctaLabel}
@@ -113,7 +121,7 @@ export default async function BlogPostPage({ params }: Params) {
           </Container>
         </article>
       </main>
-      <Footer />
+      <Footer locale={locale} />
     </>
   )
 }

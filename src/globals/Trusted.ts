@@ -7,7 +7,7 @@ export const Trusted: GlobalConfig = {
   access: { read: () => true },
   admin: { group: 'Sections' },
   fields: [
-    { name: 'eyebrow', type: 'text', required: true, label: 'Eyebrow' },
+    { name: 'eyebrow', localized: true, type: 'text', required: true, label: 'Eyebrow' },
     {
       name: 'references',
       type: 'array',

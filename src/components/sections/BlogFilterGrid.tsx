@@ -2,19 +2,30 @@
 
 import { useState } from 'react'
 
-import { BLOG } from '@/lib/content'
+import { BLOG as BLOG_FR } from '@/lib/content'
+import { translateCategory } from '@/lib/content-i18n'
+import type { Locale } from '@/lib/i18n'
 import type { BlogPostView } from '@/types'
 import { BlogCard } from '@/components/ui/BlogCard'
 
-/** Category-filterable grid of every article — used on the /blog list page. */
-export function BlogFilterGrid({ posts }: { posts: BlogPostView[] }) {
-  const [active, setActive] = useState<string>(BLOG.categories[0])
-  const filtered = active === BLOG.categories[0] ? posts : posts.filter((p) => p.category === active)
+const FILTER_ARIA: Record<Locale, string> = {
+  fr: 'Filtrer les articles',
+  en: 'Filter articles',
+  ar: 'تصفية المقالات',
+}
+
+/** Category-filterable grid of every article — used on the /blog list page.
+ *  Categories are the fixed French keys (matching Payload's post.category); the
+ *  visible label is translated per locale. */
+export function BlogFilterGrid({ posts, locale }: { posts: BlogPostView[]; locale: Locale }) {
+  const categories = BLOG_FR.categories
+  const [active, setActive] = useState<string>(categories[0])
+  const filtered = active === categories[0] ? posts : posts.filter((p) => p.category === active)
 
   return (
     <div>
-      <div className="flex flex-wrap justify-center gap-2.5" role="group" aria-label="Filtrer les articles">
-        {BLOG.categories.map((c) => {
+      <div className="flex flex-wrap justify-center gap-2.5" role="group" aria-label={FILTER_ARIA[locale]}>
+        {categories.map((c) => {
           const isActive = active === c
           return (
             <button
@@ -28,7 +39,7 @@ export function BlogFilterGrid({ posts }: { posts: BlogPostView[] }) {
                   : 'border-line text-mute hover:border-ink hover:text-ink'
               }`}
             >
-              {c}
+              {translateCategory(c, locale)}
             </button>
           )
         })}
@@ -36,7 +47,7 @@ export function BlogFilterGrid({ posts }: { posts: BlogPostView[] }) {
 
       <div className="mx-auto mt-12 grid max-w-6xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((post) => (
-          <BlogCard key={post.slug} post={post} />
+          <BlogCard key={post.slug} post={post} locale={locale} />
         ))}
       </div>
     </div>

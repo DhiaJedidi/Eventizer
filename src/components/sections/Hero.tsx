@@ -2,7 +2,8 @@
 
 import { useEffect, useLayoutEffect, useMemo, useRef } from 'react'
 
-import { HERO, SITE } from '@/lib/content'
+import { getContent } from '@/lib/content-i18n'
+import { isRtl, type Locale } from '@/lib/i18n'
 import type { HeroView } from '@/types'
 import { gsap } from '@/lib/gsap'
 import { Magnetic } from '@/components/ui/Magnetic'
@@ -11,17 +12,21 @@ const POSTER = '/images/hero/hero-events-poster-v2.jpg'
 const VIDEO = '/videos/hero-events.mp4'
 const useIso = typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
-/** Split the (locked copy.md) headline into two visual lines at the comma. */
-function splitHeading(h1: string): string[][] {
+/** Split the headline into two visual lines at the comma. For LTR each line is
+ *  split into characters (per-char reveal); for RTL (Arabic) the line is kept
+ *  whole so the letters keep their contextual joins. */
+function splitHeading(h1: string, rtl: boolean): string[][] {
   const i = h1.indexOf(', ')
   const lines = i === -1 ? [h1] : [h1.slice(0, i + 1), h1.slice(i + 2)]
-  return lines.map((line) => Array.from(line))
+  return lines.map((line) => (rtl ? [line] : Array.from(line)))
 }
 
-export function Hero({ data }: { data: HeroView }) {
+export function Hero({ data, locale }: { data: HeroView; locale: Locale }) {
+  const { HERO, SITE } = getContent(locale)
+  const rtl = isRtl(locale)
   const root = useRef<HTMLElement>(null)
   const videoRef = useRef<HTMLVideoElement>(null)
-  const lines = useMemo(() => splitHeading(data.h1), [data.h1])
+  const lines = useMemo(() => splitHeading(data.h1, rtl), [data.h1, rtl])
 
   // Slow the hero reel to 0.75x. Set defaultPlaybackRate too so it survives
   // autoplay start and loops; re-assert on play for browsers that reset it.
@@ -98,7 +103,7 @@ export function Hero({ data }: { data: HeroView }) {
               {lines.map((line, li) => (
                 <span key={li} className="block">
                   {line.map((ch, ci) => (
-                    <span key={`${li}-${ci}`} className="hero-char inline-block will-change-transform">
+                    <span key={`${li}-${ci}`} className={`hero-char will-change-transform ${rtl ? 'block' : 'inline-block'}`}>
                       {ch === ' ' ? ' ' : ch}
                     </span>
                   ))}

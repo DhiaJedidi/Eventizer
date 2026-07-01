@@ -43,6 +43,17 @@ export default buildConfig({
       titleSuffix: '— Eventizer',
     },
   },
+  // Multilingual content — editors get a per-field locale switcher in /admin. Empty
+  // translations fall back to the default (French) so the site is never half-empty.
+  localization: {
+    locales: [
+      { label: 'Français', code: 'fr' },
+      { label: 'English', code: 'en' },
+      { label: 'العربية', code: 'ar', rtl: true },
+    ],
+    defaultLocale: 'fr',
+    fallback: true,
+  },
   collections: [
     withPostRevalidate(Posts),
     withHomeRevalidateCollection(CaseStudies),

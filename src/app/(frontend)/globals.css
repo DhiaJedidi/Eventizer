@@ -74,6 +74,21 @@
     outline-offset: 3px;
     border-radius: 2px;
   }
+
+  /* Arabic (RTL): use the Arabic typeface, and drop the tight/eyebrow letter-spacing
+     which breaks Arabic letter joins. Latin-only tokens keep their spacing. */
+  html[lang='ar'] {
+    --font-display: var(--font-arabic);
+    --font-body: var(--font-arabic);
+  }
+  html[lang='ar'] h1,
+  html[lang='ar'] h2,
+  html[lang='ar'] h3,
+  html[lang='ar'] h4,
+  html[lang='ar'] h5,
+  html[lang='ar'] .eyebrow {
+    letter-spacing: 0;
+  }
 }
 
 /* ─── Components / utilities ─────────────────────────────────────────────────── */

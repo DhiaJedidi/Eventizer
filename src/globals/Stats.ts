@@ -8,7 +8,7 @@ export const Stats: GlobalConfig = {
   admin: { group: 'Sections' },
   fields: [
     {
-      name: 'metrics',
+      name: 'metrics', localized: true,
       type: 'array',
       label: 'Métriques',
       minRows: 1,

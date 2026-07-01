@@ -7,17 +7,17 @@ export const Testimonials: GlobalConfig = {
   access: { read: () => true },
   admin: { group: 'Sections' },
   fields: [
-    { name: 'eyebrow', type: 'text', required: true, label: 'Eyebrow' },
-    { name: 'h2', type: 'text', required: true, label: 'Titre H2 (lecteurs d’écran)' },
+    { name: 'eyebrow', localized: true, type: 'text', required: true, label: 'Eyebrow' },
+    { name: 'h2', localized: true, type: 'text', required: true, label: 'Titre H2 (lecteurs d’écran)' },
     {
-      name: 'ticker',
+      name: 'ticker', localized: true,
       type: 'array',
       label: 'Bandeau défilant (noms)',
       labels: { singular: 'Nom', plural: 'Noms' },
       fields: [{ name: 'label', type: 'text', required: true }],
     },
     {
-      name: 'items',
+      name: 'items', localized: true,
       type: 'array',
       label: 'Témoignages',
       minRows: 1,

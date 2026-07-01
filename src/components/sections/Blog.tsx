@@ -3,6 +3,7 @@
 import Link from 'next/link'
 
 import type { BlogSectionView } from '@/types'
+import type { Locale } from '@/lib/i18n'
 import { Container } from '@/components/ui/Container'
 import { BlogCard } from '@/components/ui/BlogCard'
 import { Magnetic } from '@/components/ui/Magnetic'
@@ -13,7 +14,7 @@ import { useGsapReveal } from '@/hooks/useGsapReveal'
  * link to the full /blog list. Header + the featured selection come from Payload
  * (Sections → Blog). Brand cobalt/gold, GSAP scroll reveal (reduced-motion safe).
  */
-export function Blog({ data }: { data: BlogSectionView }) {
+export function Blog({ data, locale }: { data: BlogSectionView; locale: Locale }) {
   const posts = data.posts.slice(0, 3)
   const ref = useGsapReveal<HTMLElement>({ childSelector: '.blog-reveal', y: 28, stagger: 0.1, start: 'top 82%' })
 
@@ -30,7 +31,7 @@ export function Blog({ data }: { data: BlogSectionView }) {
         <div className="mx-auto grid max-w-5xl gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
             <div key={post.slug} className="blog-reveal h-full">
-              <BlogCard post={post} />
+              <BlogCard post={post} locale={locale} />
             </div>
           ))}
         </div>
@@ -38,7 +39,7 @@ export function Blog({ data }: { data: BlogSectionView }) {
         <div className="blog-reveal mt-12 flex justify-center">
           <Magnetic>
             <Link
-              href="/blog"
+              href={`/${locale}/blog`}
               className="group inline-flex items-center gap-2 rounded-full bg-cobalt px-8 py-3.5 font-semibold text-white transition-[filter] duration-300 hover:brightness-110"
             >
               {data.viewAll}

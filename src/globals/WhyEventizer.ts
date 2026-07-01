@@ -7,10 +7,10 @@ export const WhyEventizer: GlobalConfig = {
   access: { read: () => true },
   admin: { group: 'Sections' },
   fields: [
-    { name: 'eyebrow', type: 'text', required: true, label: 'Eyebrow' },
-    { name: 'h2', type: 'text', required: true, label: 'Titre H2' },
+    { name: 'eyebrow', localized: true, type: 'text', required: true, label: 'Eyebrow' },
+    { name: 'h2', localized: true, type: 'text', required: true, label: 'Titre H2' },
     {
-      name: 'differentiators',
+      name: 'differentiators', localized: true,
       type: 'array',
       label: 'Différenciateurs',
       minRows: 1,

@@ -3,7 +3,8 @@
 import { useRef, useState } from 'react'
 import Image from 'next/image'
 
-import { PILLARS } from '@/lib/content'
+import { getContent } from '@/lib/content-i18n'
+import type { Locale } from '@/lib/i18n'
 import type { SectionHeaderView } from '@/types'
 import { track } from '@/lib/analytics'
 import { gsap } from '@/lib/gsap'
@@ -17,7 +18,8 @@ const PILLAR_IMAGES = [
   '/images/pillars/audiovisuel.png',
 ]
 
-export function Pillars({ header }: { header: SectionHeaderView }) {
+export function Pillars({ header, locale }: { header: SectionHeaderView; locale: Locale }) {
+  const { PILLARS } = getContent(locale)
   const [active, setActive] = useState(0)
   const [openMobile, setOpenMobile] = useState<number | null>(0)
   const panelRef = useRef<HTMLDivElement>(null)
@@ -117,7 +119,15 @@ export function Pillars({ header }: { header: SectionHeaderView }) {
   )
 }
 
-function PillarPanel({ pillar, index }: { pillar: (typeof PILLARS.items)[number]; index: number }) {
+type PillarItem = {
+  title: string
+  description: string
+  services: readonly string[]
+  expandCta: string
+  expandAria: string
+}
+
+function PillarPanel({ pillar, index }: { pillar: PillarItem; index: number }) {
   return (
     <div className="pillar-panel">
       <div className="group mb-7 overflow-hidden rounded-xl">

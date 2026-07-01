@@ -94,7 +94,7 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  fallbackLocale: null;
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('fr' | 'en' | 'ar') | ('fr' | 'en' | 'ar')[];
   globals: {
     hero: Hero;
     trusted: Trusted;
@@ -123,7 +123,7 @@ export interface Config {
     'blog-section': BlogSectionSelect<false> | BlogSectionSelect<true>;
     'contact-info': ContactInfoSelect<false> | ContactInfoSelect<true>;
   };
-  locale: null;
+  locale: 'fr' | 'en' | 'ar';
   widgets: {
     collections: CollectionsWidget;
   };

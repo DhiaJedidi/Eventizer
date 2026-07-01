@@ -18,6 +18,7 @@ import type {
   TrustedView,
   WhyView,
 } from '@/types'
+import type { Locale } from './i18n'
 import { getPayloadClient } from './payload'
 import {
   BLOG,
@@ -107,10 +108,10 @@ const TB_PLACEHOLDERS = [
 ]
 
 /**
- * Each getter reads from Payload, and falls back to content.ts (verbatim copy.md)
- * whenever the global/collection is unseeded OR the DB is unavailable (e.g. before
- * the first migration). The page therefore always renders real copy — never empty,
- * never placeholder — and becomes editable in /admin once seeded.
+ * Each getter reads from Payload for the requested `locale`, and falls back to
+ * content.ts (French copy.md) whenever the global/collection is unseeded OR the DB
+ * is unavailable. Untranslated fields fall back to the default locale (fr) via
+ * Payload's `localization.fallback`, so the page is never empty in any language.
  */
 
 function mediaToImage(media: number | Media | null | undefined): ImageView | null {
@@ -126,10 +127,10 @@ function mediaToImage(media: number | Media | null | undefined): ImageView | nul
   }
 }
 
-export async function getHero(): Promise<HeroView> {
+export async function getHero(locale: Locale): Promise<HeroView> {
   try {
     const payload = await getPayloadClient()
-    const g = await payload.findGlobal({ slug: 'hero', depth: 1 })
+    const g = await payload.findGlobal({ slug: 'hero', depth: 1, locale })
     if (g?.h1) {
       return {
         eyebrow: g.eyebrow,
@@ -155,10 +156,10 @@ export async function getHero(): Promise<HeroView> {
   }
 }
 
-export async function getStats(): Promise<StatView[]> {
+export async function getStats(locale: Locale): Promise<StatView[]> {
   try {
     const payload = await getPayloadClient()
-    const g = await payload.findGlobal({ slug: 'stats' })
+    const g = await payload.findGlobal({ slug: 'stats', locale })
     if (g?.metrics && g.metrics.length > 0) {
       return g.metrics.map((m) => ({ value: m.value, label: m.label }))
     }
@@ -168,10 +169,10 @@ export async function getStats(): Promise<StatView[]> {
   return STATS.metrics.map((m) => ({ value: m.value, label: m.label }))
 }
 
-export async function getPlatform(): Promise<PlatformView> {
+export async function getPlatform(locale: Locale): Promise<PlatformView> {
   try {
     const payload = await getPayloadClient()
-    const g = await payload.findGlobal({ slug: 'platform', depth: 1 })
+    const g = await payload.findGlobal({ slug: 'platform', depth: 1, locale })
     if (g?.h2) {
       return {
         eyebrow: g.eyebrow,
@@ -197,10 +198,10 @@ export async function getPlatform(): Promise<PlatformView> {
   }
 }
 
-export async function getWhy(): Promise<WhyView> {
+export async function getWhy(locale: Locale): Promise<WhyView> {
   try {
     const payload = await getPayloadClient()
-    const g = await payload.findGlobal({ slug: 'why-eventizer' })
+    const g = await payload.findGlobal({ slug: 'why-eventizer', locale })
     if (g?.differentiators && g.differentiators.length > 0) {
       return {
         eyebrow: g.eyebrow,
@@ -218,7 +219,7 @@ export async function getWhy(): Promise<WhyView> {
   }
 }
 
-export async function getCaseStudies(): Promise<CaseStudyView[]> {
+export async function getCaseStudies(locale: Locale): Promise<CaseStudyView[]> {
   try {
     const payload = await getPayloadClient()
     const res = await payload.find({
@@ -226,6 +227,7 @@ export async function getCaseStudies(): Promise<CaseStudyView[]> {
       sort: 'order',
       depth: 1,
       limit: 50,
+      locale,
     })
     if (res.docs.length > 0) {
       return res.docs.map((d) => ({
@@ -252,7 +254,7 @@ export async function getCaseStudies(): Promise<CaseStudyView[]> {
   }))
 }
 
-export async function getTeam(): Promise<TeamMemberView[]> {
+export async function getTeam(locale: Locale): Promise<TeamMemberView[]> {
   try {
     const payload = await getPayloadClient()
     const res = await payload.find({
@@ -260,6 +262,7 @@ export async function getTeam(): Promise<TeamMemberView[]> {
       sort: 'order',
       depth: 1,
       limit: 50,
+      locale,
     })
     if (res.docs.length > 0) {
       return res.docs.map((m) => ({
@@ -280,10 +283,10 @@ export async function getTeam(): Promise<TeamMemberView[]> {
   }))
 }
 
-export async function getTrusted(): Promise<TrustedView> {
+export async function getTrusted(locale: Locale): Promise<TrustedView> {
   try {
     const payload = await getPayloadClient()
-    const g = await payload.findGlobal({ slug: 'trusted' })
+    const g = await payload.findGlobal({ slug: 'trusted', locale })
     if (g?.references && g.references.length > 0) {
       return { eyebrow: g.eyebrow, references: g.references.map((r) => r.name) }
     }
@@ -293,10 +296,10 @@ export async function getTrusted(): Promise<TrustedView> {
   return { eyebrow: TRUSTED.eyebrow, references: [...TRUSTED.references] }
 }
 
-export async function getTestimonials(): Promise<TestimonialsView> {
+export async function getTestimonials(locale: Locale): Promise<TestimonialsView> {
   try {
     const payload = await getPayloadClient()
-    const g = await payload.findGlobal({ slug: 'testimonials' })
+    const g = await payload.findGlobal({ slug: 'testimonials', locale })
     if (g?.items && g.items.length > 0) {
       return {
         eyebrow: g.eyebrow,
@@ -326,10 +329,10 @@ export async function getTestimonials(): Promise<TestimonialsView> {
   }
 }
 
-export async function getTeamBuilding(): Promise<TeamBuildingView> {
+export async function getTeamBuilding(locale: Locale): Promise<TeamBuildingView> {
   try {
     const payload = await getPayloadClient()
-    const g = await payload.findGlobal({ slug: 'team-building', depth: 1 })
+    const g = await payload.findGlobal({ slug: 'team-building', depth: 1, locale })
     if (g?.items && g.items.length > 0) {
       return {
         eyebrow: g.eyebrow ?? undefined,
@@ -356,10 +359,10 @@ export async function getTeamBuilding(): Promise<TeamBuildingView> {
   }
 }
 
-export async function getPosts(): Promise<BlogPostView[]> {
+export async function getPosts(locale: Locale): Promise<BlogPostView[]> {
   try {
     const payload = await getPayloadClient()
-    const res = await payload.find({ collection: 'posts', sort: 'order', depth: 1, limit: 100 })
+    const res = await payload.find({ collection: 'posts', sort: 'order', depth: 1, limit: 100, locale })
     if (res.docs.length > 0) return res.docs.map(mapPost)
   } catch {
     /* fall through */
@@ -367,7 +370,7 @@ export async function getPosts(): Promise<BlogPostView[]> {
   return BLOG.posts.map(fallbackPost)
 }
 
-export async function getPostBySlug(slug: string): Promise<BlogPostView | null> {
+export async function getPostBySlug(slug: string, locale: Locale): Promise<BlogPostView | null> {
   try {
     const payload = await getPayloadClient()
     const res = await payload.find({
@@ -375,6 +378,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPostView | null> 
       where: { slug: { equals: slug } },
       depth: 1,
       limit: 1,
+      locale,
     })
     if (res.docs.length > 0) return mapPost(res.docs[0])
   } catch {
@@ -384,10 +388,10 @@ export async function getPostBySlug(slug: string): Promise<BlogPostView | null> 
   return p ? fallbackPost(p) : null
 }
 
-export async function getContactInfo(): Promise<ContactInfoView> {
+export async function getContactInfo(locale: Locale): Promise<ContactInfoView> {
   try {
     const payload = await getPayloadClient()
-    const g = await payload.findGlobal({ slug: 'contact-info' })
+    const g = await payload.findGlobal({ slug: 'contact-info', locale })
     if (g?.email) {
       return {
         eyebrow: g.eyebrow ?? CONTACT.eyebrow,
@@ -408,11 +412,12 @@ export async function getContactInfo(): Promise<ContactInfoView> {
 /** Generic section-header getter (eyebrow / title / subtitle) for a global slug. */
 async function getSectionHeader(
   slug: 'pillars' | 'references-section' | 'team-section',
+  locale: Locale,
   fallback: SectionHeaderView,
 ): Promise<SectionHeaderView> {
   try {
     const payload = await getPayloadClient()
-    const g = await payload.findGlobal({ slug })
+    const g = await payload.findGlobal({ slug, locale })
     if (g?.title) return { eyebrow: g.eyebrow ?? undefined, title: g.title, subtitle: g.subtitle ?? undefined }
   } catch {
     /* fall through */
@@ -420,31 +425,31 @@ async function getSectionHeader(
   return fallback
 }
 
-export function getPillars(): Promise<SectionHeaderView> {
-  return getSectionHeader('pillars', {
+export function getPillars(locale: Locale): Promise<SectionHeaderView> {
+  return getSectionHeader('pillars', locale, {
     eyebrow: PILLARS.eyebrow,
     title: PILLARS.h2,
     subtitle: PILLARS.subheadline,
   })
 }
 
-export function getReferencesSection(): Promise<SectionHeaderView> {
-  return getSectionHeader('references-section', { eyebrow: CASE_STUDIES.eyebrow, title: CASE_STUDIES.h2 })
+export function getReferencesSection(locale: Locale): Promise<SectionHeaderView> {
+  return getSectionHeader('references-section', locale, { eyebrow: CASE_STUDIES.eyebrow, title: CASE_STUDIES.h2 })
 }
 
-export function getTeamSection(): Promise<SectionHeaderView> {
-  return getSectionHeader('team-section', { eyebrow: TEAM.eyebrow, title: TEAM.h2 })
+export function getTeamSection(locale: Locale): Promise<SectionHeaderView> {
+  return getSectionHeader('team-section', locale, { eyebrow: TEAM.eyebrow, title: TEAM.h2 })
 }
 
-export async function getBlogSection(): Promise<BlogSectionView> {
+export async function getBlogSection(locale: Locale): Promise<BlogSectionView> {
   try {
     const payload = await getPayloadClient()
-    const g = await payload.findGlobal({ slug: 'blog-section', depth: 1 })
+    const g = await payload.findGlobal({ slug: 'blog-section', depth: 1, locale })
     if (g?.title) {
       let posts = (g.featuredPosts ?? [])
         .filter((p): p is Post => typeof p === 'object' && p !== null)
         .map(mapPost)
-      if (posts.length === 0) posts = (await getPosts()).slice(0, 3)
+      if (posts.length === 0) posts = (await getPosts(locale)).slice(0, 3)
       return {
         eyebrow: g.eyebrow ?? undefined,
         title: g.title,
@@ -461,6 +466,6 @@ export async function getBlogSection(): Promise<BlogSectionView> {
     title: BLOG.homeHeading,
     subtitle: BLOG.tagline,
     viewAll: BLOG.viewAll,
-    posts: (await getPosts()).slice(0, 3),
+    posts: (await getPosts(locale)).slice(0, 3),
   }
 }

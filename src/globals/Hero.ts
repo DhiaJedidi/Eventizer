@@ -7,12 +7,12 @@ export const Hero: GlobalConfig = {
   access: { read: () => true },
   admin: { group: 'Sections' },
   fields: [
-    { name: 'eyebrow', type: 'text', required: true, label: 'Eyebrow' },
-    { name: 'h1', type: 'text', required: true, label: 'Titre H1' },
-    { name: 'subheadline', type: 'textarea', required: true, label: 'Sous-titre' },
-    { name: 'primaryCta', type: 'text', required: true, label: 'CTA principal' },
-    { name: 'secondaryCta', type: 'text', required: true, label: 'CTA secondaire' },
-    { name: 'trustStrip', type: 'text', required: true, label: 'Bandeau de confiance' },
+    { name: 'eyebrow', localized: true, type: 'text', required: true, label: 'Eyebrow' },
+    { name: 'h1', localized: true, type: 'text', required: true, label: 'Titre H1' },
+    { name: 'subheadline', localized: true, type: 'textarea', required: true, label: 'Sous-titre' },
+    { name: 'primaryCta', localized: true, type: 'text', required: true, label: 'CTA principal' },
+    { name: 'secondaryCta', localized: true, type: 'text', required: true, label: 'CTA secondaire' },
+    { name: 'trustStrip', localized: true, type: 'text', required: true, label: 'Bandeau de confiance' },
     {
       name: 'image',
       type: 'upload',
