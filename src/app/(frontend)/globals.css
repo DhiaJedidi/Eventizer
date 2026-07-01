@@ -186,6 +186,28 @@
     pointer-events: none;
   }
 
+  /* ── Mobile nav drawer — staggered fade-up reveal ── */
+  .nav-drawer-item {
+    opacity: 0;
+    animation: navDrawerItem 0.5s cubic-bezier(0.32, 0.72, 0, 1) forwards;
+  }
+  @keyframes navDrawerItem {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-drawer-item {
+      opacity: 1;
+      animation: none;
+    }
+  }
+
   /* ── Trusted / sparkles horizon glow (brand cobalt) ── */
   .trusted-glow {
     background: radial-gradient(
