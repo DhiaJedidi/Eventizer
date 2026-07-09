@@ -80,7 +80,7 @@ export default buildConfig({
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
-    outputFile: path.resolve(dirname, 'payload-types.ts'),
+    outputFile: path.resolve(dirname, 'types.ts'),
   },
   db: sqliteAdapter({
     // Auto-sync the schema in dev / when seeding (creates tables on the target DB,

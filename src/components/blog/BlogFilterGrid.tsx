@@ -2,11 +2,11 @@
 
 import { useState } from 'react'
 
-import { BLOG as BLOG_FR } from '@/lib/content'
-import { translateCategory } from '@/lib/content-i18n'
+import { BLOG as BLOG_FR } from '@/content/fr'
+import { translateCategory } from '@/content'
 import type { Locale } from '@/lib/i18n'
 import type { BlogPostView } from '@/types'
-import { BlogCard } from '@/components/ui/BlogCard'
+import { BlogCard } from '@/components/blog/BlogCard'
 
 const FILTER_ARIA: Record<Locale, string> = {
   fr: 'Filtrer les articles',

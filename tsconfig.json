@@ -16,7 +16,7 @@
     "plugins": [{ "name": "next" }],
     "paths": {
       "@/*": ["./src/*"],
-      "@payload-config": ["./src/payload.config.ts"]
+      "@payload-config": ["./src/payload/config.ts"]
     }
   },
   "include": [
@@ -24,7 +24,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/payload-types.ts"
+    "src/payload/types.ts"
   ],
   "exclude": ["node_modules", "skills"]
 }

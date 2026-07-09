@@ -2,7 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef } from 'react'
 
-import { PLATFORM } from '@/lib/content'
+import { PLATFORM } from '@/content/fr'
 import type { PlatformView } from '@/types'
 import { gsap } from '@/lib/gsap'
 import { Container } from '@/components/ui/Container'

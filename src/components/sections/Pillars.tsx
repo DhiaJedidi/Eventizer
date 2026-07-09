@@ -3,7 +3,7 @@
 import { useRef, useState } from 'react'
 import Image from 'next/image'
 
-import { getContent } from '@/lib/content-i18n'
+import { getContent } from '@/content'
 import type { Locale } from '@/lib/i18n'
 import type { SectionHeaderView } from '@/types'
 import { track } from '@/lib/analytics'

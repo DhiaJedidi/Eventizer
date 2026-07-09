@@ -70,10 +70,10 @@ const nextConfig = {
   webpack: (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@payloadcms/storage-vercel-blob/client': path.resolve(dirname, 'src/stubs/vercel-blob-client.ts'),
+      '@payloadcms/storage-vercel-blob/client': path.resolve(dirname, 'src/lib/stubs/vercel-blob-client.ts'),
     }
     return config
   },
 }
 
-export default withPayload(nextConfig)
+export default withPayload(nextConfig, { configPath: path.resolve(dirname, 'src/payload/config.ts') })

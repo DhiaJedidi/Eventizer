@@ -10,9 +10,9 @@
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
-import * as frC from './lib/content'
-import * as enC from './lib/content.en'
-import * as arC from './lib/content.ar'
+import * as frC from '@/content/fr'
+import * as enC from '@/content/en'
+import * as arC from '@/content/ar'
 
 type Content = typeof frC
 const CONTENT: Record<'fr' | 'en' | 'ar', Content> = {

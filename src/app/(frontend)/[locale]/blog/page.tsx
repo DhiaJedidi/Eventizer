@@ -1,12 +1,12 @@
 import type { Metadata } from 'next'
 
-import { getContent } from '@/lib/content-i18n'
+import { getContent } from '@/content'
 import { DEFAULT_LOCALE, isLocale } from '@/lib/i18n'
-import { getPosts } from '@/lib/queries'
+import { getPosts } from '@/lib/cms/queries'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { Container } from '@/components/ui/Container'
-import { BlogFilterGrid } from '@/components/sections/BlogFilterGrid'
+import { BlogFilterGrid } from '@/components/blog/BlogFilterGrid'
 
 export const revalidate = 3600
 

@@ -5,7 +5,7 @@ import Link from 'next/link'
 import type { BlogSectionView } from '@/types'
 import type { Locale } from '@/lib/i18n'
 import { Container } from '@/components/ui/Container'
-import { BlogCard } from '@/components/ui/BlogCard'
+import { BlogCard } from '@/components/blog/BlogCard'
 import { Magnetic } from '@/components/ui/Magnetic'
 import { useGsapReveal } from '@/hooks/useGsapReveal'
 

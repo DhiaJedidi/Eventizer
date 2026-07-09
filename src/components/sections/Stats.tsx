@@ -2,7 +2,7 @@
 
 import { useEffect, useLayoutEffect, useRef } from 'react'
 
-import { STATS } from '@/lib/content'
+import { STATS } from '@/content/fr'
 import type { StatView } from '@/types'
 import { gsap } from '@/lib/gsap'
 import { Container } from '@/components/ui/Container'

@@ -16,7 +16,7 @@ import {
   getTestimonials,
   getTrusted,
   getWhy,
-} from '@/lib/queries'
+} from '@/lib/cms/queries'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { ScrollRefresh } from '@/components/ui/ScrollRefresh'

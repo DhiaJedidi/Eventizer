@@ -1,7 +1,7 @@
-import type { Locale } from './i18n'
-import * as fr from './content'
-import * as en from './content.en'
-import * as ar from './content.ar'
+import type { Locale } from '@/lib/i18n'
+import * as fr from './fr'
+import * as en from './en'
+import * as ar from './ar'
 
 /** All UI strings (nav, footer, contact form, blog labels, pillar cards, …) per
  *  locale. CMS-managed section content comes from Payload (queries.ts); this covers

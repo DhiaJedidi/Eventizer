@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import Script from 'next/script'
 import { Montserrat, Poppins, Cairo } from 'next/font/google'
 
-import { getContent } from '@/lib/content-i18n'
+import { getContent } from '@/content'
 import { LOCALES, DEFAULT_LOCALE, dirFor, isLocale, type Locale } from '@/lib/i18n'
 import { Cursor } from '@/components/ui/Cursor'
 import { ScrollProgress } from '@/components/ui/ScrollProgress'

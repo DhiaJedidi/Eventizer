@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 
-import { getPayloadClient } from '@/lib/payload'
+import { getPayloadClient } from '@/lib/cms/client'
 import { contactSchema } from '@/lib/schemas'
 import { sendContactEmail } from '@/lib/sendEmail'
 

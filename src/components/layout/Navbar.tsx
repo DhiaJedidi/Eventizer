@@ -4,7 +4,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
-import { getContent } from '@/lib/content-i18n'
+import { getContent } from '@/content'
 import type { Locale } from '@/lib/i18n'
 import { track } from '@/lib/analytics'
 import { Magnetic } from '@/components/ui/Magnetic'

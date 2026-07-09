@@ -4,7 +4,7 @@ import { forwardRef, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { getContent } from '@/lib/content-i18n'
+import { getContent } from '@/content'
 import type { Locale } from '@/lib/i18n'
 import { contactSchema, type ContactInput } from '@/lib/schemas'
 import { track } from '@/lib/analytics'

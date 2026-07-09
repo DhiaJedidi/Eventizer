@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { getContent, translateCategory } from '@/lib/content-i18n'
+import { getContent, translateCategory } from '@/content'
 import type { Locale } from '@/lib/i18n'
 import type { BlogPostView } from '@/types'
 

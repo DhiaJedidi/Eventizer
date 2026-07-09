@@ -2,7 +2,7 @@
 
 import { useEffect, useLayoutEffect, useMemo, useRef } from 'react'
 
-import { getContent } from '@/lib/content-i18n'
+import { getContent } from '@/content'
 import { isRtl, type Locale } from '@/lib/i18n'
 import type { HeroView } from '@/types'
 import { gsap } from '@/lib/gsap'

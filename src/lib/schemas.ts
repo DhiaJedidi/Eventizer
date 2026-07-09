@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { CONTACT } from './content'
+import { CONTACT } from '@/content/fr'
 
 const e = CONTACT.errors
 

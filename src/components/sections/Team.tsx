@@ -2,7 +2,7 @@
 
 import Image from 'next/image'
 
-import { TEAM } from '@/lib/content'
+import { TEAM } from '@/content/fr'
 import type { SectionHeaderView, TeamMemberView } from '@/types'
 import { useGsapReveal } from '@/hooks/useGsapReveal'
 import { Container } from '@/components/ui/Container'

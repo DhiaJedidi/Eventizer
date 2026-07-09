@@ -1,6 +1,6 @@
 import 'server-only'
 
-import type { Media, Post } from '@/payload-types'
+import type { Media, Post } from '@/payload/types'
 import type {
   BlogBlock,
   BlogPostView,
@@ -18,8 +18,8 @@ import type {
   TrustedView,
   WhyView,
 } from '@/types'
-import type { Locale } from './i18n'
-import { getPayloadClient } from './payload'
+import type { Locale } from '../i18n'
+import { getPayloadClient } from './client'
 import {
   BLOG,
   CASE_STUDIES,
@@ -34,7 +34,7 @@ import {
   TESTIMONIALS,
   TRUSTED,
   WHY,
-} from './content'
+} from '@/content/fr'
 
 // Placeholder cover per slug (from content.ts) used until a post has a real upload.
 const BLOG_PLACEHOLDER: Record<string, string> = Object.fromEntries(

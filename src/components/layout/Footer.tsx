@@ -4,7 +4,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
-import { getContent } from '@/lib/content-i18n'
+import { getContent } from '@/content'
 import type { Locale } from '@/lib/i18n'
 import { gsap } from '@/lib/gsap'
 import { track } from '@/lib/analytics'
