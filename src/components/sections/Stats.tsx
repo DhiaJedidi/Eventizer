@@ -79,6 +79,7 @@ export function Stats({ data }: { data: StatView[] }) {
           {data.map((stat) => (
             <div key={stat.label} className="stat-item text-center will-change-transform">
               <span
+                dir="ltr"
                 className="stat-value block whitespace-nowrap font-heading text-4xl font-extrabold tracking-tight text-ink sm:text-5xl"
                 data-value={stat.value}
               >

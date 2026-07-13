@@ -175,7 +175,7 @@ function CaseCard({ item }: { item: CaseStudyView }) {
 
       <div className="relative z-10 p-7">
         <h3 className="font-heading text-xl font-extrabold leading-tight text-white">{item.title}</h3>
-        <p className="mt-4 font-heading text-5xl font-extrabold text-gold drop-shadow-[0_2px_24px_rgb(225_170_43/0.45)]">{item.keyStat}</p>
+        <p dir="ltr" className="mt-4 font-heading text-5xl font-extrabold text-gold drop-shadow-[0_2px_24px_rgb(225_170_43/0.45)] rtl:text-right">{item.keyStat}</p>
         <p className="mt-1 text-[13px] uppercase tracking-wideish text-white/50">{item.statLabel}</p>
         <p className="mt-3 line-clamp-3 text-sm text-white/65">{item.description}</p>
       </div>
