@@ -40,9 +40,11 @@ export function CaseStudies({ data, header }: { data: CaseStudyView[]; header: S
     if (!section || !track) return
 
     const ctx = gsap.context(() => {
+      // RTL lays the track out right-to-left, so translate the opposite way.
+      const rtl = document.documentElement.dir === 'rtl'
       const distance = () => Math.max(0, track.scrollWidth - window.innerWidth)
       gsap.to(track, {
-        x: () => -distance(),
+        x: () => (rtl ? distance() : -distance()),
         ease: 'none',
         scrollTrigger: {
           trigger: section,
@@ -115,7 +117,7 @@ export function CaseStudies({ data, header }: { data: CaseStudyView[]; header: S
       <Container>
         {pinned ? (
           <div aria-hidden="true" className="mt-12 h-0.5 w-40 overflow-hidden rounded-full bg-ink/10">
-            <div ref={barRef} className="h-0.5 w-full origin-left scale-x-0 rounded-full bg-gradient-to-r from-cobalt to-gold" />
+            <div ref={barRef} className="h-0.5 w-full origin-left scale-x-0 rounded-full bg-gradient-to-r from-cobalt to-gold rtl:origin-right" />
           </div>
         ) : (
           <div className="mt-10 flex justify-center gap-2">

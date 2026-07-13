@@ -43,9 +43,12 @@ export function ScrollXCarousel({
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
     const ctx = gsap.context(() => {
+      // In RTL the track lays out right-to-left, so the horizontal scroll must
+      // translate the opposite way (positive x) to reveal cards.
+      const rtl = document.documentElement.dir === 'rtl'
       const distance = () => Math.max(0, trackEl.scrollWidth - window.innerWidth)
       gsap.to(trackEl, {
-        x: () => -distance(),
+        x: () => (rtl ? distance() : -distance()),
         ease: 'none',
         scrollTrigger: {
           trigger: wrap,
@@ -93,7 +96,7 @@ export function ScrollXCarousel({
         </div>
 
         <div className="relative z-10 mx-8 h-1 overflow-hidden rounded-full bg-line sm:mx-[max(2rem,calc((100vw-1180px)/2))]">
-          <div ref={barRef} className="h-full w-full origin-left scale-x-0 rounded-full bg-gradient-to-r from-cobalt to-gold" />
+          <div ref={barRef} className="h-full w-full origin-left scale-x-0 rounded-full bg-gradient-to-r from-cobalt to-gold rtl:origin-right" />
         </div>
       </div>
     </div>
