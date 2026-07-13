@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useLayoutEffect, useRef } from 'react'
+import Image from 'next/image'
 
 import { PLATFORM } from '@/content/fr'
 import type { PlatformView } from '@/types'
@@ -10,7 +11,6 @@ import { ButtonLink } from '@/components/ui/Button'
 import { Magnetic } from '@/components/ui/Magnetic'
 import { Reveal } from '@/components/ui/Reveal'
 import { BrowserMockup } from '@/components/illustrations/BrowserMockup'
-import { CommandHubIllustration } from '@/components/illustrations/CommandHubIllustration'
 
 const useIso = typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
@@ -49,7 +49,14 @@ export function Platform({ data }: { data: PlatformView }) {
           <Reveal variant="clip" className="relative overflow-hidden rounded-xl shadow-[0_40px_120px_-40px_rgb(69_99_172/0.45)]">
             <div className="browser-mockup">
               <BrowserMockup url="app.eventizer.tn/dashboard">
-                <CommandHubIllustration detailed />
+                <Image
+                  src={data.screenshot?.url ?? '/platform.png'}
+                  alt={data.screenshot?.alt ?? 'Tableau de bord de la plateforme Eventizer'}
+                  width={1440}
+                  height={1024}
+                  sizes="(max-width: 768px) 92vw, 760px"
+                  className="w-full rounded-md"
+                />
               </BrowserMockup>
             </div>
           </Reveal>
