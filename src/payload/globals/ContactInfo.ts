@@ -22,13 +22,25 @@ export const ContactInfo: GlobalConfig = {
       label: 'Téléphone (lien tel:)',
       admin: { description: 'Chiffres uniquement, indicatif compris. Ex : +216XXXXXXXX' },
     },
-    { name: 'email', type: 'email', required: true, label: 'Email' },
+    { name: 'email', type: 'email', required: true, label: 'Email (affiché)' },
     {
       name: 'whatsappNumber',
       type: 'text',
       required: true,
       label: 'WhatsApp (numéro wa.me)',
       admin: { description: 'Chiffres uniquement, sans +. Ex : 216XXXXXXXX' },
+    },
+    {
+      name: 'notificationEmail',
+      type: 'email',
+      label: 'Email de réception des demandes',
+      // Internal routing address — kept out of the public API (only admins can
+      // read it); the server reads it via the Local API (overrideAccess).
+      access: { read: ({ req }) => Boolean(req.user) },
+      admin: {
+        description:
+          "Adresse qui reçoit les demandes du formulaire « Envoyer une demande » (ex. commercial ou responsable événementiel). Si vide, l'adresse par défaut du serveur (CONTACT_TO_EMAIL) est utilisée.",
+      },
     },
   ],
 }

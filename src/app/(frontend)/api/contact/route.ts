@@ -46,11 +46,24 @@ export async function POST(req: Request) {
     )
   }
 
-  // 2. Notify the team — best-effort. The lead is already saved (visible in
+  // 2. Resolve the notification recipient — configurable in Payload → Contact →
+  //    "Email de réception des demandes". Best-effort: any failure here falls back
+  //    to the CONTACT_TO_EMAIL env default and must never fail the saved lead.
+  let recipient: string | undefined
+  try {
+    const payload = await getPayloadClient()
+    const info = await payload.findGlobal({ slug: 'contact-info', overrideAccess: true })
+    recipient = (info?.notificationEmail as string | null | undefined) ?? undefined
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error('[contact] could not read recipient, using env fallback:', err)
+  }
+
+  // 3. Notify the team — best-effort. The lead is already saved (visible in
   //    /admin → Demande), so a missing/broken email config must never surface an
   //    error to the visitor or lose the lead.
   try {
-    await sendContactEmail(data)
+    await sendContactEmail(data, recipient)
   } catch (err) {
     // eslint-disable-next-line no-console
     console.error('[contact] email notification failed (lead saved):', err)

@@ -791,6 +791,10 @@ export interface ContactInfo {
    * Chiffres uniquement, sans +. Ex : 216XXXXXXXX
    */
   whatsappNumber: string;
+  /**
+   * Adresse qui reçoit les demandes du formulaire « Envoyer une demande » (ex. commercial ou responsable événementiel). Si vide, l'adresse par défaut du serveur (CONTACT_TO_EMAIL) est utilisée.
+   */
+  notificationEmail?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -989,6 +993,7 @@ export interface ContactInfoSelect<T extends boolean = true> {
   phoneHref?: T;
   email?: T;
   whatsappNumber?: T;
+  notificationEmail?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
