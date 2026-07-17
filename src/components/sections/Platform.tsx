@@ -54,7 +54,11 @@ export function Platform({ data }: { data: PlatformView }) {
                   alt={data.screenshot?.alt ?? 'Tableau de bord de la plateforme Eventizer'}
                   width={1344}
                   height={752}
-                  sizes="(max-width: 768px) 92vw, 760px"
+                  // The mockup is ~1082px wide on desktop (Container maxes at
+                  // 1200px minus gutters), so a 760px `sizes` served an upscaled,
+                  // pixelated file. Declare the real layout width instead.
+                  sizes="(min-width: 1024px) 1100px, 100vw"
+                  quality={90}
                   className="w-full rounded-md"
                 />
               </BrowserMockup>
