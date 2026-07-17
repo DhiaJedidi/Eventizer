@@ -52,8 +52,8 @@ export function Platform({ data }: { data: PlatformView }) {
                 <Image
                   src={data.screenshot?.url ?? '/platform.png'}
                   alt={data.screenshot?.alt ?? 'Tableau de bord de la plateforme Eventizer'}
-                  width={1440}
-                  height={1024}
+                  width={1344}
+                  height={752}
                   sizes="(max-width: 768px) 92vw, 760px"
                   className="w-full rounded-md"
                 />
