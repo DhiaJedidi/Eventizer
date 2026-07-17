@@ -195,42 +195,6 @@ export const TRUSTED = {
   references: ['Sommet de la Francophonie', 'Journées de Radiologie', 'Osstem Meeting Tunisia', 'B-Connected'],
 } as const
 
-// شهادات مبدئية مرتبطة بمراجع Eventizer الحقيقية. النسبة قائمة على الأدوار (دون
-// أشخاص مُختلَقين) — تُستبدَل بشهادات حقيقية مسمّاة وبموافقة أصحابها قبل الإطلاق.
-export const TESTIMONIALS = {
-  eyebrow: 'شهادات',
-  h2: 'ثقة عملائنا، فعاليةً بعد فعالية.',
-  prevAria: 'الشهادة السابقة',
-  nextAria: 'الشهادة التالية',
-  ticker: ['Sommet de la Francophonie', 'Journées de Radiologie', 'Osstem Meeting Tunisia', 'B-Connected'],
-  items: [
-    {
-      quote: 'يتطلّب تنسيق قمّة دولية شريكًا لا تشوبه شائبة. وقد كانت Eventizer كذلك، من البروتوكول إلى الاعتماد.',
-      author: 'Comité d’organisation',
-      role: 'اللوجستيات والاعتماد',
-      company: 'Sommet de la Francophonie',
-    },
-    {
-      quote: 'التسجيلات، والتحكّم في الدخول، والملخّص المرئي اليومي: أُدير مؤتمرنا من الألف إلى الياء، دون أدنى خلل.',
-      author: 'Comité scientifique',
-      role: 'مؤتمر طبّي سنوي',
-      company: 'Journées de Radiologie',
-    },
-    {
-      quote: 'فريق سريع الاستجابة، من أوّل جلسة تعريفية حتّى اللحظة الأخيرة. الاستقبال، وإصدار الشارات، والإخراج: تنفيذ لا تشوبه شائبة.',
-      author: 'Responsable événementiel',
-      role: 'Osstem Tunisie',
-      company: 'Osstem Meeting Tunisia',
-    },
-    {
-      quote: 'لم يكن معرضنا للأعمال B2B ليحقّق التأثير نفسه لولا منصّتهم وإنتاجهم في الموقع.',
-      author: 'Direction du salon',
-      role: 'العارضون والأجنحة',
-      company: 'B-Connected',
-    },
-  ],
-} as const
-
 export const TEAM = {
   eyebrow: 'فريقنا',
   h2: 'الأشخاص الذين يقفون وراء كلّ فعالية ناجحة.',

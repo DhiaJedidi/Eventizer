@@ -198,43 +198,6 @@ export const TRUSTED = {
   references: ['Sommet de la Francophonie', 'Journées de Radiologie', 'Osstem Meeting Tunisia', 'B-Connected'],
 } as const
 
-// Placeholder testimonials mapped to real Eventizer references. Attribution is
-// role-based (no invented individuals) — replace with real, named, consented
-// quotes before launch (seo.md/landing-page: authentic social proof converts).
-export const TESTIMONIALS = {
-  eyebrow: 'Témoignages',
-  h2: 'La confiance de nos clients, événement après événement.',
-  prevAria: 'Témoignage précédent',
-  nextAria: 'Témoignage suivant',
-  ticker: ['Sommet de la Francophonie', 'Journées de Radiologie', 'Osstem Meeting Tunisia', 'B-Connected'],
-  items: [
-    {
-      quote: 'Coordonner un sommet international exige un partenaire irréprochable. Eventizer l’a été, du protocole à l’accréditation.',
-      author: 'Comité d’organisation',
-      role: 'Logistique & accréditation',
-      company: 'Sommet de la Francophonie',
-    },
-    {
-      quote: 'Inscriptions, contrôle d’accès, récap vidéo quotidien : notre congrès géré de A à Z, sans la moindre faille.',
-      author: 'Comité scientifique',
-      role: 'Congrès médical annuel',
-      company: 'Journées de Radiologie',
-    },
-    {
-      quote: 'Une équipe réactive, du premier brief à la dernière minute. Accueil, badging et régie : exécution impeccable.',
-      author: 'Responsable événementiel',
-      role: 'Osstem Tunisie',
-      company: 'Osstem Meeting Tunisia',
-    },
-    {
-      quote: 'Notre salon B2B n’aurait pas eu le même impact sans leur plateforme et leur production sur site.',
-      author: 'Direction du salon',
-      role: 'Exposants & stands',
-      company: 'B-Connected',
-    },
-  ],
-} as const
-
 export const TEAM = {
   eyebrow: 'Notre équipe',
   h2: 'Les personnes derrière chaque événement réussi.',

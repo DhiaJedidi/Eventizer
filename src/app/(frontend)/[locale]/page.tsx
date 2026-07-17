@@ -13,7 +13,6 @@ import {
   getTeam,
   getTeamBuilding,
   getTeamSection,
-  getTestimonials,
   getTrusted,
   getWhy,
 } from '@/lib/cms/queries'
@@ -33,9 +32,6 @@ const TeamBuilding = dynamic(() =>
 const Platform = dynamic(() => import('@/components/sections/Platform').then((m) => m.Platform))
 const CaseStudies = dynamic(() =>
   import('@/components/sections/CaseStudies').then((m) => m.CaseStudies),
-)
-const Testimonials = dynamic(() =>
-  import('@/components/sections/Testimonials').then((m) => m.Testimonials),
 )
 const Team = dynamic(() => import('@/components/sections/Team').then((m) => m.Team))
 const WhyEventizer = dynamic(() =>
@@ -60,7 +56,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     team,
     contactInfo,
     trusted,
-    testimonials,
     teamBuilding,
     pillars,
     referencesSection,
@@ -75,7 +70,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
     getTeam(locale),
     getContactInfo(locale),
     getTrusted(locale),
-    getTestimonials(locale),
     getTeamBuilding(locale),
     getPillars(locale),
     getReferencesSection(locale),
@@ -95,7 +89,6 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <Platform data={platform} />
         <Stats data={stats} />
         <CaseStudies data={cases} header={referencesSection} />
-        {testimonials.visible ? <Testimonials data={testimonials} /> : null}
         <Team data={team} header={teamSection} />
         <WhyEventizer data={why} />
         <Blog data={blogSection} locale={locale} />

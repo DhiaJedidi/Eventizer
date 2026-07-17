@@ -103,7 +103,6 @@ export interface Config {
     platform: Platform;
     stats: Stat;
     'references-section': ReferencesSection;
-    testimonials: Testimonial;
     'team-section': TeamSection;
     'why-eventizer': WhyEventizer;
     'blog-section': BlogSection;
@@ -117,7 +116,6 @@ export interface Config {
     platform: PlatformSelect<false> | PlatformSelect<true>;
     stats: StatsSelect<false> | StatsSelect<true>;
     'references-section': ReferencesSectionSelect<false> | ReferencesSectionSelect<true>;
-    testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     'team-section': TeamSectionSelect<false> | TeamSectionSelect<true>;
     'why-eventizer': WhyEventizerSelect<false> | WhyEventizerSelect<true>;
     'blog-section': BlogSectionSelect<false> | BlogSectionSelect<true>;
@@ -701,36 +699,6 @@ export interface ReferencesSection {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "testimonials".
- */
-export interface Testimonial {
-  id: number;
-  /**
-   * Décochez pour masquer la section Témoignages du site public.
-   */
-  visible?: boolean | null;
-  eyebrow: string;
-  h2: string;
-  ticker?:
-    | {
-        label: string;
-        id?: string | null;
-      }[]
-    | null;
-  items?:
-    | {
-        quote: string;
-        author: string;
-        role: string;
-        company: string;
-        id?: string | null;
-      }[]
-    | null;
-  updatedAt?: string | null;
-  createdAt?: string | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "team-section".
  */
 export interface TeamSection {
@@ -911,33 +879,6 @@ export interface ReferencesSectionSelect<T extends boolean = true> {
   eyebrow?: T;
   title?: T;
   subtitle?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  globalType?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "testimonials_select".
- */
-export interface TestimonialsSelect<T extends boolean = true> {
-  visible?: T;
-  eyebrow?: T;
-  h2?: T;
-  ticker?:
-    | T
-    | {
-        label?: T;
-        id?: T;
-      };
-  items?:
-    | T
-    | {
-        quote?: T;
-        author?: T;
-        role?: T;
-        company?: T;
-        id?: T;
-      };
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

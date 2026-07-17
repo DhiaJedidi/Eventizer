@@ -83,21 +83,6 @@ export interface TrustedView {
   references: string[]
 }
 
-export interface TestimonialItemView {
-  quote: string
-  author: string
-  role: string
-  company: string
-}
-
-export interface TestimonialsView {
-  /** Toggled in Payload → Témoignages → "Afficher la section". */
-  visible: boolean
-  eyebrow: string
-  h2: string
-  ticker: string[]
-  items: TestimonialItemView[]
-}
 
 export interface TeamBuildingItemView {
   title: string

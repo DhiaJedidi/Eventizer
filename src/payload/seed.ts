@@ -123,22 +123,6 @@ const seed = async () => {
     })
 
     await payload.updateGlobal({
-      slug: 'testimonials',
-      locale,
-      data: {
-        eyebrow: C.TESTIMONIALS.eyebrow,
-        h2: C.TESTIMONIALS.h2,
-        ticker: C.TESTIMONIALS.ticker.map((label) => ({ label })),
-        items: C.TESTIMONIALS.items.map((i) => ({
-          quote: i.quote,
-          author: i.author,
-          role: i.role,
-          company: i.company,
-        })),
-      },
-    })
-
-    await payload.updateGlobal({
       slug: 'team-building',
       locale,
       data: {

@@ -20,7 +20,6 @@ import { TeamBuilding } from './globals/TeamBuilding'
 import { Platform } from './globals/Platform'
 import { Stats } from './globals/Stats'
 import { ReferencesSection } from './globals/ReferencesSection'
-import { Testimonials } from './globals/Testimonials'
 import { TeamSection } from './globals/TeamSection'
 import { WhyEventizer } from './globals/WhyEventizer'
 import { BlogSection } from './globals/BlogSection'
@@ -71,7 +70,6 @@ export default buildConfig({
     Platform,
     Stats,
     ReferencesSection,
-    Testimonials,
     TeamSection,
     WhyEventizer,
     BlogSection,

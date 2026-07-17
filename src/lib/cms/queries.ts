@@ -14,7 +14,6 @@ import type {
   StatView,
   TeamBuildingView,
   TeamMemberView,
-  TestimonialsView,
   TrustedView,
   WhyView,
 } from '@/types'
@@ -31,7 +30,6 @@ import {
   STATS,
   TEAM,
   TEAM_BUILDING,
-  TESTIMONIALS,
   TRUSTED,
   WHY,
 } from '@/content/fr'
@@ -294,46 +292,6 @@ export async function getTrusted(locale: Locale): Promise<TrustedView> {
     /* fall through */
   }
   return { eyebrow: TRUSTED.eyebrow, references: [...TRUSTED.references] }
-}
-
-export async function getTestimonials(locale: Locale): Promise<TestimonialsView> {
-  // Read outside the items check so the toggle is honoured even when the CMS has
-  // no items yet and we serve the fallback copy. Defaults to visible if the
-  // global is unreachable — never hide the section because of a read error.
-  let visible = true
-  try {
-    const payload = await getPayloadClient()
-    const g = await payload.findGlobal({ slug: 'testimonials', locale })
-    visible = g?.visible ?? true
-    if (g?.items && g.items.length > 0) {
-      return {
-        visible,
-        eyebrow: g.eyebrow,
-        h2: g.h2,
-        ticker: (g.ticker ?? []).map((t) => t.label),
-        items: g.items.map((i) => ({
-          quote: i.quote,
-          author: i.author,
-          role: i.role,
-          company: i.company,
-        })),
-      }
-    }
-  } catch {
-    /* fall through */
-  }
-  return {
-    visible,
-    eyebrow: TESTIMONIALS.eyebrow,
-    h2: TESTIMONIALS.h2,
-    ticker: [...TESTIMONIALS.ticker],
-    items: TESTIMONIALS.items.map((i) => ({
-      quote: i.quote,
-      author: i.author,
-      role: i.role,
-      company: i.company,
-    })),
-  }
 }
 
 export async function getTeamBuilding(locale: Locale): Promise<TeamBuildingView> {

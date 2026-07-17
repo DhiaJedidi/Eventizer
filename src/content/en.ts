@@ -198,43 +198,6 @@ export const TRUSTED = {
   references: ['Sommet de la Francophonie', 'Journées de Radiologie', 'Osstem Meeting Tunisia', 'B-Connected'],
 } as const
 
-// Placeholder testimonials mapped to real Eventizer references. Attribution is
-// role-based (no invented individuals) — replace with real, named, consented
-// quotes before launch (seo.md/landing-page: authentic social proof converts).
-export const TESTIMONIALS = {
-  eyebrow: 'Testimonials',
-  h2: 'Our clients trust us, event after event.',
-  prevAria: 'Previous testimonial',
-  nextAria: 'Next testimonial',
-  ticker: ['Sommet de la Francophonie', 'Journées de Radiologie', 'Osstem Meeting Tunisia', 'B-Connected'],
-  items: [
-    {
-      quote: 'Coordinating an international summit demands a flawless partner. Eventizer was exactly that, from protocol to accreditation.',
-      author: "Comité d'organisation",
-      role: 'Logistics & accreditation',
-      company: 'Sommet de la Francophonie',
-    },
-    {
-      quote: 'Registrations, access control, daily video recaps: our congress managed from A to Z, without a single hitch.',
-      author: 'Comité scientifique',
-      role: 'Annual medical congress',
-      company: 'Journées de Radiologie',
-    },
-    {
-      quote: 'A responsive team, from the first brief to the last minute. Welcome, badging and production: flawless execution.',
-      author: 'Responsable événementiel',
-      role: 'Osstem Tunisie',
-      company: 'Osstem Meeting Tunisia',
-    },
-    {
-      quote: "Our B2B trade show wouldn't have had the same impact without their platform and their on-site production.",
-      author: 'Direction du salon',
-      role: 'Exhibitors & booths',
-      company: 'B-Connected',
-    },
-  ],
-} as const
-
 export const TEAM = {
   eyebrow: 'Our team',
   h2: 'The people behind every successful event.',
