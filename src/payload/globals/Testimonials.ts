@@ -7,6 +7,17 @@ export const Testimonials: GlobalConfig = {
   access: { read: () => true },
   admin: { group: 'Sections' },
   fields: [
+    {
+      name: 'visible',
+      type: 'checkbox',
+      defaultValue: true,
+      label: 'Afficher la section',
+      // Not localized: the section is shown/hidden on the whole site, not per langue.
+      admin: {
+        position: 'sidebar',
+        description: 'Décochez pour masquer la section Témoignages du site public.',
+      },
+    },
     { name: 'eyebrow', localized: true, type: 'text', required: true, label: 'Eyebrow' },
     { name: 'h2', localized: true, type: 'text', required: true, label: 'Titre H2 (lecteurs d’écran)' },
     {

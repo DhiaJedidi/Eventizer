@@ -297,11 +297,17 @@ export async function getTrusted(locale: Locale): Promise<TrustedView> {
 }
 
 export async function getTestimonials(locale: Locale): Promise<TestimonialsView> {
+  // Read outside the items check so the toggle is honoured even when the CMS has
+  // no items yet and we serve the fallback copy. Defaults to visible if the
+  // global is unreachable — never hide the section because of a read error.
+  let visible = true
   try {
     const payload = await getPayloadClient()
     const g = await payload.findGlobal({ slug: 'testimonials', locale })
+    visible = g?.visible ?? true
     if (g?.items && g.items.length > 0) {
       return {
+        visible,
         eyebrow: g.eyebrow,
         h2: g.h2,
         ticker: (g.ticker ?? []).map((t) => t.label),
@@ -317,6 +323,7 @@ export async function getTestimonials(locale: Locale): Promise<TestimonialsView>
     /* fall through */
   }
   return {
+    visible,
     eyebrow: TESTIMONIALS.eyebrow,
     h2: TESTIMONIALS.h2,
     ticker: [...TESTIMONIALS.ticker],

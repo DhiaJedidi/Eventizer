@@ -705,6 +705,10 @@ export interface ReferencesSection {
  */
 export interface Testimonial {
   id: number;
+  /**
+   * Décochez pour masquer la section Témoignages du site public.
+   */
+  visible?: boolean | null;
   eyebrow: string;
   h2: string;
   ticker?:
@@ -916,6 +920,7 @@ export interface ReferencesSectionSelect<T extends boolean = true> {
  * via the `definition` "testimonials_select".
  */
 export interface TestimonialsSelect<T extends boolean = true> {
+  visible?: T;
   eyebrow?: T;
   h2?: T;
   ticker?:

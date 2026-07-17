@@ -95,7 +95,7 @@ export default async function HomePage({ params }: { params: Promise<{ locale: s
         <Platform data={platform} />
         <Stats data={stats} />
         <CaseStudies data={cases} header={referencesSection} />
-        <Testimonials data={testimonials} />
+        {testimonials.visible ? <Testimonials data={testimonials} /> : null}
         <Team data={team} header={teamSection} />
         <WhyEventizer data={why} />
         <Blog data={blogSection} locale={locale} />

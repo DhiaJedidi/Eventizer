@@ -91,6 +91,8 @@ export interface TestimonialItemView {
 }
 
 export interface TestimonialsView {
+  /** Toggled in Payload → Témoignages → "Afficher la section". */
+  visible: boolean
   eyebrow: string
   h2: string
   ticker: string[]
